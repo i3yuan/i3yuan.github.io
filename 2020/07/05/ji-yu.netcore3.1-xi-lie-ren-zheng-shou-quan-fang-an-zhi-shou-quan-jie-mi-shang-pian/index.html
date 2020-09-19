@@ -1,0 +1,1667 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer"/>
+    <meta name="keywords" content="基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (上篇), 艾三元">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (上篇) | 艾三元</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">艾三元</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+      
+      <i class="fas fa-blog" style="zoom: 0.6;"></i>
+      
+      <span>博客</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">艾三元</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-blog"></i>
+			
+			博客
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/i3yuan" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/i3yuan" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/41.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (上篇)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/net-core/">
+                                <span class="chip bg-color">.net core</span>
+                            </a>
+                        
+                            <a href="/tags/aspnetcore%E6%BA%90%E7%A0%81/">
+                                <span class="chip bg-color">aspnetcore源码</span>
+                            </a>
+                        
+                            <a href="/tags/JWT%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83/">
+                                <span class="chip bg-color">JWT认证授权</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                DotCore/C#
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-07-05
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="基于-NetCore3-1系列-——-认证授权方案之授权揭秘-上篇"><a href="#基于-NetCore3-1系列-——-认证授权方案之授权揭秘-上篇" class="headerlink" title="基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (上篇)"></a>基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (上篇)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>回顾：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/i3yuan/p/13198355.html">认证授权方案之授权初识</a></p>
+<p>从上一节中，我们在对授权系统已经有了初步的认识和使用，可以发现，asp.net core为我们提供的授权策略是一个非常强大丰富且灵活的认证授权方案，能够满足大部分的授权场景。</p>
+<p>在ConfigureServices中配置服务：将授权服务添加到容器</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ConfigureServices</span><span class="token punctuation">(</span>IServiceCollection services<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+         services<span class="token punctuation">.</span><span class="token function">AddAuthorization</span><span class="token punctuation">(</span>options <span class="token operator">=</span><span class="token operator">></span>
+            <span class="token punctuation">{</span>
+                options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"customizePermisson"</span><span class="token punctuation">,</span>
+                  policy <span class="token operator">=</span><span class="token operator">></span> policy
+                    <span class="token punctuation">.</span>Requirements
+                    <span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PermissionRequirement</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//此外，还需要在 IAuthorizationHandler 类型的范围内向 DI 系统注册新的处理程序：</span>
+            services<span class="token punctuation">.</span><span class="token generic-method function">AddScoped<span class="token punctuation">&lt;</span>IAuthorizationHandler<span class="token punctuation">,</span> PermissionRequirementHandler<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>在Configure中注册管道：运行使用调用方法来配置Http请求管道</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Configure</span><span class="token punctuation">(</span>IApplicationBuilder app<span class="token punctuation">,</span> IWebHostEnvironment env<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>    
+        <span class="token comment" spellcheck="true">//开启授权</span>
+        app<span class="token punctuation">.</span><span class="token function">UseAuthorization</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span></code></pre>
+<p>通过以上几行代码的实现，就可以进行授权了，这个时候，你可以会问，这几行代码都进行了什么操作实现授权的？</p>
+<p>好了，继续回到上节最后说的在这一节中对授权策略的核心进行一步步的揭秘的。<br><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202007/1576550-20200705171038295-856234940.jpg"><img src="https://img2020.cnblogs.com/blog/1576550/202007/1576550-20200705171038295-856234940.jpg" alt="img"></a></p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p><strong>引入整体结构</strong></p>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202007/1576550-20200704214056167-1731181699.png"><img src="https://img2020.cnblogs.com/blog/1576550/202007/1576550-20200704214056167-1731181699.png" alt="授权"></a></p>
+<h3 id="2-1-添加授权AddAuthorization"><a href="#2-1-添加授权AddAuthorization" class="headerlink" title="2.1 添加授权AddAuthorization"></a>2.1 添加授权<strong>AddAuthorization</strong></h3><p>添加授权策略服务使用<code>AddAuthorization</code>方法，以便调用。</p>
+<p>从源码可以发现，从core3.0后，由之前在core2.0中的<code>AuthorizationServiceCollectionExtensions.cs</code>文件中，原来的<code>AddAuthorization</code>的方法变为了<code>AddAuthorizationCore</code>方法，微软在这一块进行了封装在<code>PolicyServiceCollectionExtensions.cs</code>文件中，沿用了之前<code>AddAuthorization</code>拓展名称，不影响之前版本的使用。</p>
+<p>我们来看看aspnetcore源码:</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">PolicyServiceCollectionExtensions</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> IServiceCollection <span class="token function">AddAuthorizationPolicyEvaluator</span><span class="token punctuation">(</span><span class="token keyword">this</span> IServiceCollection services<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>services <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>services<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            services<span class="token punctuation">.</span><span class="token generic-method function">TryAddSingleton<span class="token punctuation">&lt;</span>AuthorizationPolicyMarkerService<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token generic-method function">TryAddTransient<span class="token punctuation">&lt;</span>IPolicyEvaluator<span class="token punctuation">,</span> PolicyEvaluator<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token generic-method function">TryAddTransient<span class="token punctuation">&lt;</span>IAuthorizationMiddlewareResultHandler<span class="token punctuation">,</span> AuthorizationMiddlewareResultHandler<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> services<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> IServiceCollection <span class="token function">AddAuthorization</span><span class="token punctuation">(</span><span class="token keyword">this</span> IServiceCollection services<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>services <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>services<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            services<span class="token punctuation">.</span><span class="token function">AddAuthorizationCore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token function">AddAuthorizationPolicyEvaluator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> services<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>      
+        <span class="token keyword">public</span> <span class="token keyword">static</span> IServiceCollection <span class="token function">AddAuthorization</span><span class="token punctuation">(</span><span class="token keyword">this</span> IServiceCollection services<span class="token punctuation">,</span> Action<span class="token operator">&lt;</span>AuthorizationOptions<span class="token operator">></span> configure<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>services <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>services<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            services<span class="token punctuation">.</span><span class="token function">AddAuthorizationCore</span><span class="token punctuation">(</span>configure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token function">AddAuthorizationPolicyEvaluator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> services<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">AuthorizationServiceCollectionExtensions</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> IServiceCollection <span class="token function">AddAuthorizationCore</span><span class="token punctuation">(</span><span class="token keyword">this</span> IServiceCollection services<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>services <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>services<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            services<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token generic-method function">Transient<span class="token punctuation">&lt;</span>IAuthorizationService<span class="token punctuation">,</span> DefaultAuthorizationService<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token generic-method function">Transient<span class="token punctuation">&lt;</span>IAuthorizationPolicyProvider<span class="token punctuation">,</span> DefaultAuthorizationPolicyProvider<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token generic-method function">Transient<span class="token punctuation">&lt;</span>IAuthorizationHandlerProvider<span class="token punctuation">,</span> DefaultAuthorizationHandlerProvider<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token generic-method function">Transient<span class="token punctuation">&lt;</span>IAuthorizationEvaluator<span class="token punctuation">,</span> DefaultAuthorizationEvaluator<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                        services<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token generic-method function">Transient<span class="token punctuation">&lt;</span>IAuthorizationHandlerContextFactory<span class="token punctuation">,</span> DefaultAuthorizationHandlerContextFactory<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token function">TryAddEnumerable</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token generic-method function">Transient<span class="token punctuation">&lt;</span>IAuthorizationHandler<span class="token punctuation">,</span> PassThroughAuthorizationHandler<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> services<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> IServiceCollection <span class="token function">AddAuthorizationCore</span><span class="token punctuation">(</span><span class="token keyword">this</span> IServiceCollection services<span class="token punctuation">,</span> Action<span class="token operator">&lt;</span>AuthorizationOptions<span class="token operator">></span> configure<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>services <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>services<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            services<span class="token punctuation">.</span><span class="token function">Configure</span><span class="token punctuation">(</span>configure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> services<span class="token punctuation">.</span><span class="token function">AddAuthorizationCore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>由上可知，在调用<code>AddAuthorization</code>方法进行授权配置的时候，需要使用到<code>AuthorizationOptions</code>委托方式传参。</p>
+<p>所以我们再来看看下面这一行代码，通过<code>AddPolicy</code>实现添加策略方式。</p>
+<pre class=" language-csharp"><code class="language-csharp">   options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"customizePermisson"</span><span class="token punctuation">,</span>policy <span class="token operator">=</span><span class="token operator">></span> policy<span class="token punctuation">.</span>Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PermissionRequirement</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>查看源码发现是引用了<code>AuthorizationOptions</code>对象。</p>
+<h3 id="2-2-配置选项AuthorizationOptions"><a href="#2-2-配置选项AuthorizationOptions" class="headerlink" title="2.2 配置选项AuthorizationOptions"></a>2.2 配置选项<strong>AuthorizationOptions</strong></h3><p>授权选项实现添加和授权配置，提供授权服务的配置。</p>
+<p>源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AuthorizationOptions</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> Dictionary<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> AuthorizationPolicy<span class="token operator">></span> PolicyMap <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dictionary</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> AuthorizationPolicy<span class="token operator">></span><span class="token punctuation">(</span>StringComparer<span class="token punctuation">.</span>OrdinalIgnoreCase<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">bool</span> InvokeHandlersAfterFailure <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> AuthorizationPolicy DefaultPolicy <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AuthorizationPolicyBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">RequireAuthenticatedUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> AuthorizationPolicy<span class="token operator">?</span> FallbackPolicy <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token keyword">string</span> name<span class="token punctuation">,</span> AuthorizationPolicy policy<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>name <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>policy <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>policy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            PolicyMap<span class="token punctuation">[</span>name<span class="token punctuation">]</span> <span class="token operator">=</span> policy<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token keyword">string</span> name<span class="token punctuation">,</span> Action<span class="token operator">&lt;</span>AuthorizationPolicyBuilder<span class="token operator">></span> configurePolicy<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>name <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>configurePolicy <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>configurePolicy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">var</span> policyBuilder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AuthorizationPolicyBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">configurePolicy</span><span class="token punctuation">(</span>policyBuilder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            PolicyMap<span class="token punctuation">[</span>name<span class="token punctuation">]</span> <span class="token operator">=</span> policyBuilder<span class="token punctuation">.</span><span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> AuthorizationPolicy <span class="token function">GetPolicy</span><span class="token punctuation">(</span><span class="token keyword">string</span> name<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>name <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>PolicyMap<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token keyword">var</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>定义一个字典</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">private</span> Dictionary<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> AuthorizationPolicy<span class="token operator">></span> PolicyMap <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dictionary</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> AuthorizationPolicy<span class="token operator">></span><span class="token punctuation">(</span>StringComparer<span class="token punctuation">.</span>OrdinalIgnoreCase<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>目的在于将定义的授权策略方式都保存在这个声明的<code>PolicyMap</code>当中，而其中<code>AddPolicy</code>方法是将配置的策略添加到字典中。</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token keyword">string</span> name<span class="token punctuation">,</span> AuthorizationPolicy policy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token keyword">string</span> name<span class="token punctuation">,</span> Action<span class="token operator">&lt;</span>AuthorizationPolicyBuilder<span class="token operator">></span> configurePolicy<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>而这方法中涉及到两种不同的传参对象<code>AuthorizationPolicy</code>和<code>AuthorizationPolicyBuilder</code>。</p>
+<h3 id="2-3-授权策略-AuthorizationPolicy"><a href="#2-3-授权策略-AuthorizationPolicy" class="headerlink" title="2.3 授权策略 AuthorizationPolicy"></a>2.3 授权策略 <strong>AuthorizationPolicy</strong></h3><p>表示授权要求和方案的集合。具体源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AuthorizationPolicy</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">AuthorizationPolicy</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span>IAuthorizationRequirement<span class="token operator">></span> requirements<span class="token punctuation">,</span> IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> authenticationSchemes<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>requirements <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>requirements<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>authenticationSchemes <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>authenticationSchemes<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>requirements<span class="token punctuation">.</span><span class="token function">Count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">InvalidOperationException</span><span class="token punctuation">(</span>Resources<span class="token punctuation">.</span>Exception_AuthorizationPolicyEmpty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        Requirements <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>IAuthorizationRequirement<span class="token operator">></span><span class="token punctuation">(</span>requirements<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">AsReadOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        AuthenticationSchemes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">(</span>authenticationSchemes<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">AsReadOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> IReadOnlyList<span class="token operator">&lt;</span>IAuthorizationRequirement<span class="token operator">></span> Requirements <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> IReadOnlyList<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> AuthenticationSchemes <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> AuthorizationPolicy <span class="token function">Combine</span><span class="token punctuation">(</span><span class="token keyword">params</span> AuthorizationPolicy<span class="token punctuation">[</span><span class="token punctuation">]</span> policies<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>policies <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>policies<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> <span class="token function">Combine</span><span class="token punctuation">(</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span>AuthorizationPolicy<span class="token operator">></span><span class="token punctuation">)</span>policies<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> AuthorizationPolicy <span class="token function">Combine</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span>AuthorizationPolicy<span class="token operator">></span> policies<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>policies <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>policies<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">var</span> builder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AuthorizationPolicyBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> policy <span class="token keyword">in</span> policies<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            builder<span class="token punctuation">.</span><span class="token function">Combine</span><span class="token punctuation">(</span>policy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> builder<span class="token punctuation">.</span><span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">async</span> Task<span class="token operator">&lt;</span>AuthorizationPolicy<span class="token operator">></span> <span class="token function">CombineAsync</span><span class="token punctuation">(</span>IAuthorizationPolicyProvider policyProvider<span class="token punctuation">,</span> IEnumerable<span class="token operator">&lt;</span>IAuthorizeData<span class="token operator">></span> authorizeData<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>policyProvider <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>policyProvider<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>authorizeData <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>authorizeData<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">// Avoid allocating enumerator if the data is known to be empty</span>
+        <span class="token keyword">var</span> skipEnumeratingData <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>authorizeData <span class="token keyword">is</span> IList<span class="token operator">&lt;</span>IAuthorizeData<span class="token operator">></span> dataList<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            skipEnumeratingData <span class="token operator">=</span> dataList<span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        AuthorizationPolicyBuilder policyBuilder <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>skipEnumeratingData<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> authorizeDatum <span class="token keyword">in</span> authorizeData<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>policyBuilder <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    policyBuilder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AuthorizationPolicyBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token keyword">var</span> useDefaultPolicy <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">IsNullOrWhiteSpace</span><span class="token punctuation">(</span>authorizeDatum<span class="token punctuation">.</span>Policy<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">var</span> policy <span class="token operator">=</span> <span class="token keyword">await</span> policyProvider<span class="token punctuation">.</span><span class="token function">GetPolicyAsync</span><span class="token punctuation">(</span>authorizeDatum<span class="token punctuation">.</span>Policy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>policy <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">InvalidOperationException</span><span class="token punctuation">(</span>Resources<span class="token punctuation">.</span><span class="token function">FormatException_AuthorizationPolicyNotFound</span><span class="token punctuation">(</span>authorizeDatum<span class="token punctuation">.</span>Policy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    policyBuilder<span class="token punctuation">.</span><span class="token function">Combine</span><span class="token punctuation">(</span>policy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    useDefaultPolicy <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token keyword">var</span> rolesSplit <span class="token operator">=</span> authorizeDatum<span class="token punctuation">.</span>Roles<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">Split</span><span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>rolesSplit <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> rolesSplit<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">var</span> trimmedRolesSplit <span class="token operator">=</span> rolesSplit<span class="token punctuation">.</span><span class="token function">Where</span><span class="token punctuation">(</span>r <span class="token operator">=</span><span class="token operator">></span> <span class="token operator">!</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">IsNullOrWhiteSpace</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>r <span class="token operator">=</span><span class="token operator">></span> r<span class="token punctuation">.</span><span class="token function">Trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    policyBuilder<span class="token punctuation">.</span><span class="token function">RequireRole</span><span class="token punctuation">(</span>trimmedRolesSplit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    useDefaultPolicy <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token keyword">var</span> authTypesSplit <span class="token operator">=</span> authorizeDatum<span class="token punctuation">.</span>AuthenticationSchemes<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">Split</span><span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>authTypesSplit <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> authTypesSplit<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> authType <span class="token keyword">in</span> authTypesSplit<span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">IsNullOrWhiteSpace</span><span class="token punctuation">(</span>authType<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>
+                            policyBuilder<span class="token punctuation">.</span>AuthenticationSchemes<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>authType<span class="token punctuation">.</span><span class="token function">Trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>useDefaultPolicy<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    policyBuilder<span class="token punctuation">.</span><span class="token function">Combine</span><span class="token punctuation">(</span><span class="token keyword">await</span> policyProvider<span class="token punctuation">.</span><span class="token function">GetDefaultPolicyAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">// If we have no policy by now, use the fallback policy if we have one</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>policyBuilder <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> fallbackPolicy <span class="token operator">=</span> <span class="token keyword">await</span> policyProvider<span class="token punctuation">.</span><span class="token function">GetFallbackPolicyAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>fallbackPolicy <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> fallbackPolicy<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> policyBuilder<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>我们从源码中可以发现，<code>Authorization</code> 对象 <code>Combine</code>方法目的在于将授权策略进行合并，同时调用了<code>AuthorizationPolicyBuilder</code>对象中<code>Combine</code>方法，对授权方案或者授权策略进行合并。再来看看<code>AuthorizationPolicy</code>对象中的<code>CombineAsync</code>方法，这里的参数用到了<code>IAuthorizeData</code>,同时这个方法的过程是将可能基于角色，基于方案或者基于策略都合并转换为是授权策略的方式，也是通过调用<code>AuthorizationPolicyBuilder</code>对象来实现合并。 所以可以看得出<code>AuthorizationPolicyBuilder</code>提供了一些创建<code>AuthorizationPolicy</code>的方法。</p>
+<blockquote>
+<p>这个时候，我们可以发现，其实之前说的基于角色、基于方案的授权方式本质上来说都是基于策略授权。</p>
+</blockquote>
+<h3 id="2-4-构建策略AuthorizationPolicyBuilder"><a href="#2-4-构建策略AuthorizationPolicyBuilder" class="headerlink" title="2.4 构建策略AuthorizationPolicyBuilder"></a>2.4 构建策略<strong>AuthorizationPolicyBuilder</strong></h3><p>除了上面说到使用<code>AuthorizationPolicy</code>对象之外，我们还可以用<code>AuthorizationPolicyBuilder</code>对象以<code>Buider</code>来创建<code>AuthorizationPolicy</code>对象,将多个<code>AuthorizationPolicy</code>对象提供的数组进行合并，所以<code>AuthorizationPolicyBuilder</code>提供的<code>Combine</code>方法的使用，为<code>AuthorizationPolicy</code>授权构建提供了许多便捷的方式。</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AuthorizationPolicyBuilder</span>
+<span class="token punctuation">{</span> 
+    <span class="token keyword">public</span> <span class="token function">AuthorizationPolicyBuilder</span><span class="token punctuation">(</span><span class="token keyword">params</span> <span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> authenticationSchemes<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">AddAuthenticationSchemes</span><span class="token punctuation">(</span>authenticationSchemes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">AuthorizationPolicyBuilder</span><span class="token punctuation">(</span>AuthorizationPolicy policy<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">Combine</span><span class="token punctuation">(</span>policy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> IList<span class="token operator">&lt;</span>IAuthorizationRequirement<span class="token operator">></span> Requirements <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>IAuthorizationRequirement<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+    <span class="token keyword">public</span> IList<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> AuthenticationSchemes <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">AddAuthenticationSchemes</span><span class="token punctuation">(</span><span class="token keyword">params</span> <span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> schemes<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> authType <span class="token keyword">in</span> schemes<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            AuthenticationSchemes<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>authType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>    
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">AddRequirements</span><span class="token punctuation">(</span><span class="token keyword">params</span> IAuthorizationRequirement<span class="token punctuation">[</span><span class="token punctuation">]</span> requirements<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> req <span class="token keyword">in</span> requirements<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>req<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">Combine</span><span class="token punctuation">(</span>AuthorizationPolicy policy<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>policy <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>policy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token function">AddAuthenticationSchemes</span><span class="token punctuation">(</span>policy<span class="token punctuation">.</span>AuthenticationSchemes<span class="token punctuation">.</span><span class="token function">ToArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">AddRequirements</span><span class="token punctuation">(</span>policy<span class="token punctuation">.</span>Requirements<span class="token punctuation">.</span><span class="token function">ToArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>    
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireClaim</span><span class="token punctuation">(</span><span class="token keyword">string</span> claimType<span class="token punctuation">,</span> <span class="token keyword">params</span> <span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> allowedValues<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>claimType <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>claimType<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> <span class="token function">RequireClaim</span><span class="token punctuation">(</span>claimType<span class="token punctuation">,</span> <span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">)</span>allowedValues<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> 
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireClaim</span><span class="token punctuation">(</span><span class="token keyword">string</span> claimType<span class="token punctuation">,</span> IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> allowedValues<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>claimType <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>claimType<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ClaimsAuthorizationRequirement</span><span class="token punctuation">(</span>claimType<span class="token punctuation">,</span> allowedValues<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>    
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireClaim</span><span class="token punctuation">(</span><span class="token keyword">string</span> claimType<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>claimType <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>claimType<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ClaimsAuthorizationRequirement</span><span class="token punctuation">(</span>claimType<span class="token punctuation">,</span> allowedValues<span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>     
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireRole</span><span class="token punctuation">(</span><span class="token keyword">params</span> <span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> roles<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>roles <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>roles<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> <span class="token function">RequireRole</span><span class="token punctuation">(</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">)</span>roles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>  
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireRole</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> roles<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>roles <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>roles<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RolesAuthorizationRequirement</span><span class="token punctuation">(</span>roles<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>    
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireUserName</span><span class="token punctuation">(</span><span class="token keyword">string</span> userName<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>userName <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>userName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NameAuthorizationRequirement</span><span class="token punctuation">(</span>userName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireAuthenticatedUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DenyAnonymousAuthorizationRequirement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireAssertion</span><span class="token punctuation">(</span>Func<span class="token operator">&lt;</span>AuthorizationHandlerContext<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token operator">></span> handler<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>handler <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AssertionRequirement</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> AuthorizationPolicyBuilder <span class="token function">RequireAssertion</span><span class="token punctuation">(</span>Func<span class="token operator">&lt;</span>AuthorizationHandlerContext<span class="token punctuation">,</span> Task<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span><span class="token operator">></span> handler<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>handler <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Requirements<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AssertionRequirement</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> 
+    <span class="token keyword">public</span> AuthorizationPolicy <span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">AuthorizationPolicy</span><span class="token punctuation">(</span>Requirements<span class="token punctuation">,</span> AuthenticationSchemes<span class="token punctuation">.</span><span class="token function">Distinct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>由上面多出出现的<code>IAuthorizationRequirement</code>对象可以发现，授权要求<code>Requirement</code>属性是策略的核心方案，每一种<code>Requirement</code>都代表一种授权方式。同时<code>IAuthorizationPolicyBuilder</code>为这些预定义的方案创建了它们对应的使用方式并将其添加到<code>Requirements</code>集合中。</p>
+<h3 id="2-5-授权要求IAuthorizationRequirement"><a href="#2-5-授权要求IAuthorizationRequirement" class="headerlink" title="2.5 授权要求IAuthorizationRequirement"></a>2.5 授权要求<strong>IAuthorizationRequirement</strong></h3><pre class=" language-csharp"><code class="language-csharp">   <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IAuthorizationRequirement</span>
+   <span class="token punctuation">{</span>
+   <span class="token punctuation">}</span></code></pre>
+<p>接口并没有任何实现成员，因为授权要求是具有不同的表现形式的，所有才没有具体的实现成员。授权要求目的在于检验某个当前用户是否具有相应的要求, 所以大部分<code>IAuthorizationRequirement</code>接口的实现类都继承了<code>IAuthorizationHandler</code> 接口来提供HandleAsync方法来实现对应的授权检验。</p>
+<p>下面介绍asp.net core框架里面默认实现的几种<code>IAuthorizationRequirement</code>实现类型。</p>
+<h3 id="2-5-1-DenyAnonymousAuthorizationRequirement"><a href="#2-5-1-DenyAnonymousAuthorizationRequirement" class="headerlink" title="2.5.1 DenyAnonymousAuthorizationRequirement"></a>2.5.1 DenyAnonymousAuthorizationRequirement</h3><p>阻止匿名用户操作，言外之意就是拒绝未被验证的匿名用户访问资源。</p>
+<p>源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DenyAnonymousAuthorizationRequirement</span> <span class="token punctuation">:</span> AuthorizationHandler<span class="token operator">&lt;</span>DenyAnonymousAuthorizationRequirement<span class="token operator">></span><span class="token punctuation">,</span> IAuthorizationRequirement
+<span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token keyword">override</span> Task <span class="token function">HandleRequirementAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">,</span> DenyAnonymousAuthorizationRequirement requirement<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> user <span class="token operator">=</span> context<span class="token punctuation">.</span>User<span class="token punctuation">;</span>
+        <span class="token keyword">var</span> userIsAnonymous <span class="token operator">=</span>
+            user<span class="token operator">?</span><span class="token punctuation">.</span>Identity <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span>
+            <span class="token operator">!</span>user<span class="token punctuation">.</span>Identities<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span>i <span class="token operator">=</span><span class="token operator">></span> i<span class="token punctuation">.</span>IsAuthenticated<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>userIsAnonymous<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span>requirement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>通过用户的<code>CliamPrincipal</code>对象身份是否为空或是否是一个经过认证的用户身份，以此来确定当前请求的用户是否来源于匿名用户。</p>
+<h3 id="2-5-2-NameAuthorizationRequirement"><a href="#2-5-2-NameAuthorizationRequirement" class="headerlink" title="2.5.2 NameAuthorizationRequirement"></a>2.5.2 NameAuthorizationRequirement</h3><p>指定用户名的授权方式，判断当前用户与某个指定的用户是否匹配以此来授权访问资源。</p>
+<p>源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NameAuthorizationRequirement</span> <span class="token punctuation">:</span> AuthorizationHandler<span class="token operator">&lt;</span>NameAuthorizationRequirement<span class="token operator">></span><span class="token punctuation">,</span> IAuthorizationRequirement
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">NameAuthorizationRequirement</span><span class="token punctuation">(</span><span class="token keyword">string</span> requiredName<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>requiredName <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>requiredName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        RequiredName <span class="token operator">=</span> requiredName<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">string</span> RequiredName <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">protected</span> <span class="token keyword">override</span> Task <span class="token function">HandleRequirementAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">,</span> NameAuthorizationRequirement requirement<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>User <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>User<span class="token punctuation">.</span>Identities<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span>i <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Equals</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span>Name<span class="token punctuation">,</span> requirement<span class="token punctuation">.</span>RequiredName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span>requirement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>其中<code>RequiredName</code>属性为授权用户，通过<code>HandleRequirementAsync</code>方法进行校验当前用户的<code>ClaimPrincipal</code>对象的身份与<code>RequiredName</code>是否具有匹配。</p>
+<blockquote>
+<p>这里的判断用的是 string.Equals() 说明这里比较的用户名是区别大小写的。</p>
+</blockquote>
+<h3 id="2-5-3-ClaimsAuthorizationRequirement"><a href="#2-5-3-ClaimsAuthorizationRequirement" class="headerlink" title="2.5.3 ClaimsAuthorizationRequirement"></a>2.5.3 ClaimsAuthorizationRequirement</h3><p>基于指定声明类型的授权策略，检验当前用户是否声明类型和候选值。</p>
+<p>源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ClaimsAuthorizationRequirement</span> <span class="token punctuation">:</span> AuthorizationHandler<span class="token operator">&lt;</span>ClaimsAuthorizationRequirement<span class="token operator">></span><span class="token punctuation">,</span> IAuthorizationRequirement
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token function">ClaimsAuthorizationRequirement</span><span class="token punctuation">(</span><span class="token keyword">string</span> claimType<span class="token punctuation">,</span> IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> allowedValues<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>claimType <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>claimType<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            ClaimType <span class="token operator">=</span> claimType<span class="token punctuation">;</span>
+            AllowedValues <span class="token operator">=</span> allowedValues<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">string</span> ClaimType <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> AllowedValues <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token keyword">protected</span> <span class="token keyword">override</span> Task <span class="token function">HandleRequirementAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">,</span> ClaimsAuthorizationRequirement requirement<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>User <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">var</span> found <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>requirement<span class="token punctuation">.</span>AllowedValues <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> <span class="token operator">!</span>requirement<span class="token punctuation">.</span>AllowedValues<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    found <span class="token operator">=</span> context<span class="token punctuation">.</span>User<span class="token punctuation">.</span>Claims<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span>c <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Equals</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>Type<span class="token punctuation">,</span> requirement<span class="token punctuation">.</span>ClaimType<span class="token punctuation">,</span> StringComparison<span class="token punctuation">.</span>OrdinalIgnoreCase<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">else</span>
+                <span class="token punctuation">{</span>
+                    found <span class="token operator">=</span> context<span class="token punctuation">.</span>User<span class="token punctuation">.</span>Claims<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span>c <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Equals</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>Type<span class="token punctuation">,</span> requirement<span class="token punctuation">.</span>ClaimType<span class="token punctuation">,</span> StringComparison<span class="token punctuation">.</span>OrdinalIgnoreCase<span class="token punctuation">)</span>
+                                                        <span class="token operator">&amp;&amp;</span> requirement<span class="token punctuation">.</span>AllowedValues<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>Value<span class="token punctuation">,</span> StringComparer<span class="token punctuation">.</span>Ordinal<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>found<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span>requirement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>由上我们可以看的出，<code>ClaimType</code>和<code>AllowedValues</code>这两个属性在构造函数中被初始化，分别用来表示当前声明的声明类型和默认允许值。通过<code>HandleRequirementAsync</code>来授权检验是否完成通过。</p>
+<h3 id="2-5-4-RolesAuthorizationRequirement"><a href="#2-5-4-RolesAuthorizationRequirement" class="headerlink" title="2.5.4 RolesAuthorizationRequirement"></a>2.5.4 RolesAuthorizationRequirement</h3><p>基于角色的授权策略，检验当前用户是否拥有约定匹配的角色，如果拥有，则可以访问对应的资源。</p>
+<p>源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RolesAuthorizationRequirement</span> <span class="token punctuation">:</span> AuthorizationHandler<span class="token operator">&lt;</span>RolesAuthorizationRequirement<span class="token operator">></span><span class="token punctuation">,</span> IAuthorizationRequirement
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">RolesAuthorizationRequirement</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> allowedRoles<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>allowedRoles <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>allowedRoles<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>allowedRoles<span class="token punctuation">.</span><span class="token function">Count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">InvalidOperationException</span><span class="token punctuation">(</span>Resources<span class="token punctuation">.</span>Exception_RoleRequirementEmpty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        AllowedRoles <span class="token operator">=</span> allowedRoles<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> IEnumerable<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> AllowedRoles <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">protected</span> <span class="token keyword">override</span> Task <span class="token function">HandleRequirementAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">,</span> RolesAuthorizationRequirement requirement<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>User <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">bool</span> found <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>requirement<span class="token punctuation">.</span>AllowedRoles <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> <span class="token operator">!</span>requirement<span class="token punctuation">.</span>AllowedRoles<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// Review: What do we want to do here?  No roles requested is auto success?</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span>
+            <span class="token punctuation">{</span>
+                found <span class="token operator">=</span> requirement<span class="token punctuation">.</span>AllowedRoles<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span>r <span class="token operator">=</span><span class="token operator">></span> context<span class="token punctuation">.</span>User<span class="token punctuation">.</span><span class="token function">IsInRole</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>found<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span>requirement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>其中<code>AllowedRoles</code>表示目标角色列表的集合。通过<code>HandleRequirementAsync</code>实现授权检验，调用<code>IsInRole</code>方法来判断当前用户的<code>ClaimsPrincipal</code>对象是否有指定的角色。</p>
+<h3 id="2-5-5-AssertionRequirement"><a href="#2-5-5-AssertionRequirement" class="headerlink" title="2.5.5 AssertionRequirement"></a>2.5.5 AssertionRequirement</h3><p>基于<code>AuthorizationHandlerContext</code>上下文断言的形式来声明授权。</p>
+<p>源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AssertionRequirement</span> <span class="token punctuation">:</span> IAuthorizationHandler<span class="token punctuation">,</span> IAuthorizationRequirement
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> Func<span class="token operator">&lt;</span>AuthorizationHandlerContext<span class="token punctuation">,</span> Task<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span><span class="token operator">></span> Handler <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">AssertionRequirement</span><span class="token punctuation">(</span>Func<span class="token operator">&lt;</span>AuthorizationHandlerContext<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token operator">></span> handler<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>handler <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Handler <span class="token operator">=</span> context <span class="token operator">=</span><span class="token operator">></span> Task<span class="token punctuation">.</span><span class="token function">FromResult</span><span class="token punctuation">(</span><span class="token function">handler</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">AssertionRequirement</span><span class="token punctuation">(</span>Func<span class="token operator">&lt;</span>AuthorizationHandlerContext<span class="token punctuation">,</span> Task<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span><span class="token operator">></span> handler<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>handler <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        Handler <span class="token operator">=</span> handler<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">async</span> Task <span class="token function">HandleAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">await</span> <span class="token function">Handler</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>通过类型为<code>Func&gt;</code>的委托来表示该断言，利用它来授权验证。在<code>HandleAsync</code>检验方法中，直接调用这个委托对象来完成判断。</p>
+<h3 id="2-5-6-OperationAuthorizationRequirement"><a href="#2-5-6-OperationAuthorizationRequirement" class="headerlink" title="2.5.6 OperationAuthorizationRequirement"></a>2.5.6 OperationAuthorizationRequirement</h3><p>基于预定义操作的授权策略。</p>
+<p>源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OperationAuthorizationRequirement</span> <span class="token punctuation">:</span> IAuthorizationRequirement
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">string</span> Name <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>由上可知，只是包含一个操作名字的<code>Name</code>属性，目的在于将授权的目标对象映射到一个预定义的操作上。</p>
+<h2 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h2><p>出现的<code>IAuthorizationRequirement</code>对象可以发现，授权要求<code>Requirement</code>属性是策略的核心方案，每一中<code>Requirement</code>都代表一种授权方式。</p>
+<p>在上文我们通过构建策略<code>AuthorizationPolicyBuilder</code>对象的源码可以发现，为我们提供了多个方法由预定义的<code>IAuthorizationRequirement</code>类型来创建并将其添加到<code>Requirements</code>集合中。</p>
+<h3 id="3-1-应用"><a href="#3-1-应用" class="headerlink" title="3.1 应用"></a>3.1 应用</h3><p>实例应用如下：在ConfigureServices中配置服务中</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ConfigureServices</span><span class="token punctuation">(</span>IServiceCollection services<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            services<span class="token punctuation">.</span><span class="token function">AddControllers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">var</span> combindPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AuthorizationPolicyBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">RequireClaim</span><span class="token punctuation">(</span><span class="token string">"role"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            services<span class="token punctuation">.</span><span class="token function">AddAuthorization</span><span class="token punctuation">(</span>options <span class="token operator">=</span><span class="token operator">></span>
+            <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//DenyAnonymousAuthorizationRequirement</span>
+                options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"DenyAnonyUser"</span><span class="token punctuation">,</span> policy <span class="token operator">=</span><span class="token operator">></span> policy<span class="token punctuation">.</span><span class="token function">RequireAuthenticatedUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//NameAuthorizationRequirement</span>
+                options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"NameAuth"</span><span class="token punctuation">,</span> policy <span class="token operator">=</span><span class="token operator">></span> policy<span class="token punctuation">.</span><span class="token function">RequireUserName</span><span class="token punctuation">(</span><span class="token string">"艾三元"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//ClaimsAuthorizationRequirement</span>
+                options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"ClaimsAuth"</span><span class="token punctuation">,</span> policy <span class="token operator">=</span><span class="token operator">></span> policy<span class="token punctuation">.</span><span class="token function">RequireClaim</span><span class="token punctuation">(</span><span class="token string">"role"</span><span class="token punctuation">,</span><span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//RolesAuthorizationRequirement</span>
+                options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"RolesAuth"</span><span class="token punctuation">,</span> policy <span class="token operator">=</span><span class="token operator">></span> policy<span class="token punctuation">.</span><span class="token function">RequireRole</span><span class="token punctuation">(</span><span class="token string">"admin"</span><span class="token punctuation">,</span><span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//AssertionRequirement</span>
+                options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"AssertAuth"</span><span class="token punctuation">,</span> policy <span class="token operator">=</span><span class="token operator">></span> policy<span class="token punctuation">.</span><span class="token function">RequireAssertion</span><span class="token punctuation">(</span>c<span class="token operator">=</span><span class="token operator">></span>c<span class="token punctuation">.</span>User<span class="token punctuation">.</span><span class="token function">HasClaim</span><span class="token punctuation">(</span>o<span class="token operator">=</span><span class="token operator">></span>o<span class="token punctuation">.</span>Type<span class="token operator">==</span><span class="token string">"role"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//同样可可用直接调用Combind方法，策略AuthorizationPolicy</span>
+                options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"CombindAuth"</span><span class="token punctuation">,</span> policy <span class="token operator">=</span><span class="token operator">></span> policy<span class="token punctuation">.</span><span class="token function">Combine</span><span class="token punctuation">(</span>combindPolicy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>以上，分别实现了框架中默认实现的几种<code>IAuthorizationRequirement</code>实现类型在实际中的应用，通过不同授权要求实现的策略方式，同时也可以将上面多种方式合并成一个对象，进行调用使用。</p>
+<h3 id="3-2-拓展"><a href="#3-2-拓展" class="headerlink" title="3.2 拓展"></a>3.2 拓展</h3><p>当然了，除了自带了这几种默认实现方式之外，我们也可以通过自定义<code>Requirement</code>来满足我们的需求。</p>
+<p>这个在上一节初识授权的时候，已经提到了自定义授权这一块，所以在这里再看一次。</p>
+<blockquote>
+<p><strong>定义一个权限策略<code>PermissionRequirement</code>，这个策略并包含一些属性。</strong></p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PermissionRequirement</span><span class="token punctuation">:</span> IAuthorizationRequirement
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">string</span> _permissionName <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token function">PermissionRequirement</span><span class="token punctuation">(</span><span class="token keyword">string</span> PermissionName<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _permissionName <span class="token operator">=</span> PermissionName<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong>再定义一个策略处理类</strong></p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PermissionRequirementHandler</span> <span class="token punctuation">:</span> AuthorizationHandler<span class="token operator">&lt;</span>PermissionRequirement<span class="token operator">></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token keyword">override</span> Task <span class="token function">HandleRequirementAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">,</span> PermissionRequirement requirement<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> role <span class="token operator">=</span> context<span class="token punctuation">.</span>User<span class="token punctuation">.</span><span class="token function">FindFirst</span><span class="token punctuation">(</span>c <span class="token operator">=</span><span class="token operator">></span> c<span class="token punctuation">.</span>Type <span class="token operator">==</span> ClaimTypes<span class="token punctuation">.</span>Role<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>role <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> roleValue <span class="token operator">=</span> role<span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>roleValue<span class="token operator">==</span>requirement<span class="token punctuation">.</span>_permissionName<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span>requirement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span></code></pre>
+<p><strong>配置使用</strong></p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ConfigureServices</span><span class="token punctuation">(</span>IServiceCollection services<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        services<span class="token punctuation">.</span><span class="token function">AddControllers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//基于自定义策略授权</span>
+        services<span class="token punctuation">.</span><span class="token function">AddAuthorization</span><span class="token punctuation">(</span>options <span class="token operator">=</span><span class="token operator">></span>
+        <span class="token punctuation">{</span>
+            options<span class="token punctuation">.</span><span class="token function">AddPolicy</span><span class="token punctuation">(</span><span class="token string">"customizePermisson"</span><span class="token punctuation">,</span>
+              policy <span class="token operator">=</span><span class="token operator">></span> policy
+                <span class="token punctuation">.</span>Requirements
+                <span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PermissionRequirement</span><span class="token punctuation">(</span><span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//此外，还需要在 IAuthorizationHandler 类型的范围内向 DI 系统注册新的处理程序：</span>
+        services<span class="token punctuation">.</span><span class="token generic-method function">AddScoped<span class="token punctuation">&lt;</span>IAuthorizationHandler<span class="token punctuation">,</span> PermissionRequirementHandler<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 如前所述，要求可包含多个处理程序。如果为授权层的同一要求向 DI 系统注册多个处理程序，有一个成功就足够了。</span>
+    <span class="token punctuation">}</span></code></pre>
+</blockquote>
+<p><strong>特别说明</strong></p>
+<blockquote>
+<p>上述使用的处理程序是一对一的关系，当声明要求满足条件的时候，则任务授权成功， 授权成功后， <code>context.Succeed</code> 将通过满足要求作为其唯一参数调用。</p>
+<p>但是授权策略中也包含一对多的要求关系，它们属于 <strong>&amp;</strong> 的关系，只用全部验证通过，才能最终授权成功。但是在有些场景下，我们可能希望一个授权策略可以适用多种情况，比如，我们进入公司时需要出示员工卡才可以被授权进入，但是如果我们忘了带员工卡，可以去申请一个临时卡，同样可以授权成功。</p>
+</blockquote>
+<blockquote>
+<pre class=" language-csharp"><code class="language-csharp">这里贴一个官方文档的写法：
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BuildingEntryRequirement</span> <span class="token punctuation">:</span> IAuthorizationRequirement
+<span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BadgeEntryHandler</span> <span class="token punctuation">:</span> AuthorizationHandler<span class="token operator">&lt;</span>BuildingEntryRequirement<span class="token operator">></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token keyword">override</span> Task <span class="token function">HandleRequirementAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">,</span>
+                                                   BuildingEntryRequirement requirement<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>User<span class="token punctuation">.</span><span class="token function">HasClaim</span><span class="token punctuation">(</span>c <span class="token operator">=</span><span class="token operator">></span> c<span class="token punctuation">.</span>Type <span class="token operator">==</span> <span class="token string">"BadgeId"</span> <span class="token operator">&amp;&amp;</span>
+                                       c<span class="token punctuation">.</span>Issuer <span class="token operator">==</span> <span class="token string">"http://microsoftsecurity"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span>requirement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">//TODO: Use the following if targeting a version of</span>
+        <span class="token comment" spellcheck="true">//.NET Framework older than 4.6:</span>
+        <span class="token comment" spellcheck="true">//      return Task.FromResult(0);</span>
+        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TemporaryStickerHandler</span> <span class="token punctuation">:</span> AuthorizationHandler<span class="token operator">&lt;</span>BuildingEntryRequirement<span class="token operator">></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token keyword">override</span> Task <span class="token function">HandleRequirementAsync</span><span class="token punctuation">(</span>AuthorizationHandlerContext context<span class="token punctuation">,</span> 
+                                                   BuildingEntryRequirement requirement<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>User<span class="token punctuation">.</span><span class="token function">HasClaim</span><span class="token punctuation">(</span>c <span class="token operator">=</span><span class="token operator">></span> c<span class="token punctuation">.</span>Type <span class="token operator">==</span> <span class="token string">"TemporaryBadgeId"</span> <span class="token operator">&amp;&amp;</span>
+                                       c<span class="token punctuation">.</span>Issuer <span class="token operator">==</span> <span class="token string">"https://microsoftsecurity"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// We'd also check the expiration date on the sticker.</span>
+            context<span class="token punctuation">.</span><span class="token function">Succeed</span><span class="token punctuation">(</span>requirement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">//TODO: Use the following if targeting a version of</span>
+        <span class="token comment" spellcheck="true">//.NET Framework older than 4.6:</span>
+        <span class="token comment" spellcheck="true">//      return Task.FromResult(0);</span>
+        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+</blockquote>
+<p>我们定义了两个Handler，但是想让它们得到执行，还需要将其注册到DI系统中：</p>
+<pre class=" language-csharp"><code class="language-csharp">services<span class="token punctuation">.</span><span class="token generic-method function">AddSingleton<span class="token punctuation">&lt;</span>IAuthorizationHandler<span class="token punctuation">,</span> BadgeEntryHandler<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+services<span class="token punctuation">.</span><span class="token generic-method function">AddSingleton<span class="token punctuation">&lt;</span>IAuthorizationHandler<span class="token punctuation">,</span> TemporaryStickerHandler<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>确保两个处理程序都已注册。 如果某个处理程序在某一策略评估后使用<code>context.succeed()</code>来成功 BuildingEntryRequirement ，则策略评估将成功。但是当我们调用<code>context.Fail()</code>方法后会将授权结构设置失败，那样的话，最后的结果都是会授权失败的。所以正常情况下。我们都是只设置标记<code>context.succeed()</code>。</p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>这里对上文源码中出现的一些声明方法进行说明。</p>
+<h3 id="4-1-IAuthorizeData"><a href="#4-1-IAuthorizeData" class="headerlink" title="4.1 IAuthorizeData"></a>4.1 IAuthorizeData</h3><p>使用 IAuthorizeDate 接口方法。定义授权规则应用于资源所需的数据集。</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IAuthorizeData</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">string</span> Policy <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">string</span> Roles <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">string</span> AuthenticationSchemes <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>Policy</code>：获取或设置确定对资源的访问的策略名称。</p>
+<p><code>Roles</code>: 获取或设置以逗号分隔的允许访问资源的角色列表。</p>
+<p><code>AuthenticationSchemes</code>: 获取或以设置以逗号分隔的方案列表，从中可以构造用户信息。</p>
+<p>所以<code>IAuthorizeData</code>中定义的<code>policy</code>、<code>roles</code>、<code>AuthenticationSchemes</code>三个分别代表着授权系统中的三种授权方式。</p>
+<p>具体的使用在后续讲解授权的执行流程中会进行详细介绍。</p>
+<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>上面主要讲解了授权在配置方面的源码，本来打算继续接着往下写的，但是考虑到整体篇幅可能会太长了，不便于阅读。</p>
+<p>所以授权揭秘的上篇内容就说到这里了，在后续的文章中，会继续深入了解授权内部机制的奥秘以及是如何实现执行授权流程的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>从添加授权配置开始，我们引入了需要的授权配置选项，而不同的授权要求构建不同的策略方式，从而实现一种自己满意的授权需求配置要求。</li>
+<li>如果有不对的或不理解的地方，希望大家可以多多指正，提出问题，一起讨论,不断学习,共同进步。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/aspnet/core/security/?view=aspnetcore-3.1">参考的文档</a> 和官方<a target="_blank" rel="noopener" href="https://github.com/dotnet/aspnetcore">源码</a></li>
+</ol>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">艾三元</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://i3yuan.github.io/2020/07/05/ji-yu.netcore3.1-xi-lie-ren-zheng-shou-quan-fang-an-zhi-shou-quan-jie-mi-shang-pian/">https://i3yuan.github.io/2020/07/05/ji-yu.netcore3.1-xi-lie-ren-zheng-shou-quan-fang-an-zhi-shou-quan-jie-mi-shang-pian/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">艾三元</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/net-core/">
+                                    <span class="chip bg-color">.net core</span>
+                                </a>
+                            
+                                <a href="/tags/aspnetcore%E6%BA%90%E7%A0%81/">
+                                    <span class="chip bg-color">aspnetcore源码</span>
+                                </a>
+                            
+                                <a href="/tags/JWT%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83/">
+                                    <span class="chip bg-color">JWT认证授权</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/07/09/ji-yu.netcore3.1-xi-lie-ren-zheng-shou-quan-fang-an-zhi-shou-quan-jie-mi-xia-pian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/33.jpg" class="responsive-img" alt="基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (下篇)">
+                        
+                        <span class="card-title">基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (下篇)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (下篇)前言回顾：基于.NetCore3.1系列 —— 认证授权方案之授权揭秘 (上篇)
+在上一篇中，主要讲解了授权在配置方面的源码，从添加授权配置开始，我们引入了需要的授权配置
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-09
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                    <a href="/tags/aspnetcore%E6%BA%90%E7%A0%81/">
+                        <span class="chip bg-color">aspnetcore源码</span>
+                    </a>
+                    
+                    <a href="/tags/JWT%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83/">
+                        <span class="chip bg-color">JWT认证授权</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/06/28/ji-yu.netcore3.1-xi-lie-ren-zheng-shou-quan-fang-an-zhi-shou-quan-chu-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/39.jpg" class="responsive-img" alt="基于.NetCore3.1系列 —— 认证授权方案之授权初识">
+                        
+                        <span class="card-title">基于.NetCore3.1系列 —— 认证授权方案之授权初识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于.NetCore3.1系列 —— 认证授权方案之授权初识前言回顾：认证授权方案之JwtBearer认证
+
+在上一篇中，我们通过JwtBearer的方式认证，了解在认证时，都是基于Claim的，因此我们可以通过用户令牌获取到用户的Clai
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                    <a href="/tags/JWT%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83/">
+                        <span class="chip bg-color">JWT认证授权</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">艾三元</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+           <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>-->
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/i3yuan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

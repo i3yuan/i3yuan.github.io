@@ -1,0 +1,1462 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer"/>
+    <meta name="keywords" content="基于.NetCore3.1系列 —— 日志记录之日志核心要素揭秘, 艾三元">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>基于.NetCore3.1系列 —— 日志记录之日志核心要素揭秘 | 艾三元</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">艾三元</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+      
+      <i class="fas fa-blog" style="zoom: 0.6;"></i>
+      
+      <span>博客</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">艾三元</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-blog"></i>
+			
+			博客
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/i3yuan" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/i3yuan" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">基于.NetCore3.1系列 —— 日志记录之日志核心要素揭秘</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/net-core/">
+                                <span class="chip bg-color">.net core</span>
+                            </a>
+                        
+                            <a href="/tags/Logging/">
+                                <span class="chip bg-color">Logging</span>
+                            </a>
+                        
+                            <a href="/tags/aspnetcore%E6%BA%90%E7%A0%81/">
+                                <span class="chip bg-color">aspnetcore源码</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                DotCore/C#
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-08-05
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="基于-NetCore3-1系列-——-日志记录之日志核心要素揭秘"><a href="#基于-NetCore3-1系列-——-日志记录之日志核心要素揭秘" class="headerlink" title="基于.NetCore3.1系列 —— 日志记录之日志核心要素揭秘"></a>基于.NetCore3.1系列 —— 日志记录之日志核心要素揭秘</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>回顾：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/i3yuan/p/13411793.html">日志记录之日志配置揭秘</a><br>在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/i3yuan/p/13411793.html">上一篇</a>中，我们已经了解了内置系统的默认配置和自定义配置的方式，在学习了配置的基础上，我们进一步的对日志在程序中是如何使用的深入了解学习。所以在这一篇中，主要是对日志记录的核心机制进行学习说明。</p>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805215124725-1430080791.gif"><img src="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805215124725-1430080791.gif" alt="logging"></a></p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>在上一篇中，我们留下了两个问题</p>
+<blockquote>
+<ol>
+<li>日志记录的输出可以在哪里查看？而又由什么实现决定的呢？</li>
+<li>如何管理输出不同的日志呢？都有哪些方式呢？</li>
+</ol>
+</blockquote>
+<p>第一个问题：在官方的实现有：Console 、Debug 、EventSource 、EventLog 、TraceSource 、Azure App Service，还有一些第三方实现，当然了我们自己也是可以实现的。 是由<code>ILoggerProvider</code>接口来决定实现的。</p>
+<p>第二个问题：由 log Level、EventId、Logger Provider、Log filtering、Log category、Log scopes 合作解决。</p>
+<p>由上面的问题可以发现，我们可以实现多种不同的输出目标方式来实现写日志记录，但是又如何控制在写日志这个操作不变的情况下，实现不同的输入目标，这个时候我们就会想到，可以通过抽象的方式，<strong>将写日志这个操作动作抽象出来，而输出目标依赖这个动作实现具体的操作。所以当我们调用写日志操作方法的时候，由此依次调用对应的具体实现方法，把日志写到具体的目标上。</strong></p>
+<p>这个过程具体是怎么实现的呢？我们接着往下看。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>其实在学习之前，我们应该都已经了解.net core框架有一个重要的特征就是依赖注入，通过在应用启动时候，将各种定义好的实现类型放入到一个集合容器中，通过在运行时，将从集合容器中取出放入对应的类型中。</p>
+<p>日志记录的的实现方式也离不开这个。下面让我们一起来看看。</p>
+<h3 id="3-1-日志记录器工厂"><a href="#3-1-日志记录器工厂" class="headerlink" title="3.1 日志记录器工厂"></a>3.1 日志记录器工厂</h3><h4 id="3-1-1-ILoggerFactory-接口"><a href="#3-1-1-ILoggerFactory-接口" class="headerlink" title="3.1.1 ILoggerFactory 接口"></a>3.1.1 ILoggerFactory 接口</h4><pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ILoggerFactory</span> <span class="token punctuation">:</span> IDisposable
+<span class="token punctuation">{</span>
+    ILogger <span class="token function">CreateLogger</span><span class="token punctuation">(</span><span class="token keyword">string</span> categoryName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">AddProvider</span><span class="token punctuation">(</span>ILoggerProvider provider<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>ILoggerFactory</code>是日志记录器的工厂接口类，用于配置日志记录系统并创建Logger实例的类，默认实现两个接口方法为，通过<code>CreateLogger()</code>方法来创建<code>ILogger</code>实例，（其中参数<code>categoryName</code>是一个日志类别，用于调用<code>Logger</code>所在类的全名，类别指明日志消息是谁写入的，一般我们将日志所属的的组件、服务或者消息类型名称作为日志类别。） 而<code>AddProvider()</code>添加日志记录提供程序，向日志系统注册添加一个<code>ILoggerProvider</code>。工厂接口类的默认实现类为<code>LoggerFactory</code>, 我们继续往下看：</p>
+<h4 id="3-1-2-LoggerFactory-实现"><a href="#3-1-2-LoggerFactory-实现" class="headerlink" title="3.1.2 LoggerFactory 实现"></a>3.1.2 LoggerFactory 实现</h4><p><strong>ILoggerFactory</strong> 的默认实现是 <strong>LoggerFactory</strong> ,在构造函数中，如下：</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LoggerFactory</span> <span class="token punctuation">:</span> ILoggerFactory
+    <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> LoggerRuleSelector RuleSelector <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LoggerRuleSelector</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">readonly</span> Dictionary<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> Logger<span class="token operator">></span> _loggers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dictionary</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> Logger<span class="token operator">></span><span class="token punctuation">(</span>StringComparer<span class="token punctuation">.</span>Ordinal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">readonly</span> List<span class="token operator">&lt;</span>ProviderRegistration<span class="token operator">></span> _providerRegistrations <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>ProviderRegistration<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token keyword">object</span> _sync <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">bool</span> _disposed<span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> IDisposable _changeTokenRegistration<span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> LoggerFilterOptions _filterOptions<span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> LoggerExternalScopeProvider _scopeProvider<span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token function">LoggerFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">(</span>Enumerable<span class="token punctuation">.</span><span class="token generic-method function">Empty<span class="token punctuation">&lt;</span>ILoggerProvider<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LoggerFactory</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span>ILoggerProvider<span class="token operator">></span> providers<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">(</span>providers<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">StaticFilterOptionsMonitor</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoggerFilterOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LoggerFactory</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span>ILoggerProvider<span class="token operator">></span> providers<span class="token punctuation">,</span> LoggerFilterOptions filterOptions<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">(</span>providers<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">StaticFilterOptionsMonitor</span><span class="token punctuation">(</span>filterOptions<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LoggerFactory</span><span class="token punctuation">(</span>IEnumerable<span class="token operator">&lt;</span>ILoggerProvider<span class="token operator">></span> providers<span class="token punctuation">,</span> IOptionsMonitor<span class="token operator">&lt;</span>LoggerFilterOptions<span class="token operator">></span> filterOption<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> provider <span class="token keyword">in</span> providers<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token function">AddProviderRegistration</span><span class="token punctuation">(</span>provider<span class="token punctuation">,</span> dispose<span class="token punctuation">:</span> <span class="token keyword">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            _changeTokenRegistration <span class="token operator">=</span> filterOption<span class="token punctuation">.</span><span class="token function">OnChange</span><span class="token punctuation">(</span>RefreshFilters<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">RefreshFilters</span><span class="token punctuation">(</span>filterOption<span class="token punctuation">.</span>CurrentValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">AddProviderRegistration</span><span class="token punctuation">(</span>ILoggerProvider provider<span class="token punctuation">,</span> <span class="token keyword">bool</span> dispose<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            _providerRegistrations<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ProviderRegistration</span>
+            <span class="token punctuation">{</span>
+                Provider <span class="token operator">=</span> provider<span class="token punctuation">,</span>
+                ShouldDispose <span class="token operator">=</span> dispose
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>provider <span class="token keyword">is</span> ISupportExternalScope supportsExternalScope<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>_scopeProvider <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    _scopeProvider <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LoggerExternalScopeProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                supportsExternalScope<span class="token punctuation">.</span><span class="token function">SetScopeProvider</span><span class="token punctuation">(</span>_scopeProvider<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>从<code>LoggerFactory</code> 中 的构造函数中可以发现，通过注入的方式获取到<code>ILoggerProvider</code>（这个在下文中会说明），并调用<code>AddProviderRegistration</code>方法添加注册程序，将<code>ILoggerProvider</code>保存到<code>ProviderRegistration</code>集合中。</p>
+<blockquote>
+<p><strong>AddProviderRegistration</strong> 方法：</p>
+<p>这是一个日志程序提供器，将<code>ILoggerProvider</code>保存到<code>ProviderRegistration</code>集合中。当日志提供器实现 <strong>ISupportExternalScope</strong> 接口将单例 <strong>LoggerExternalScopeProvider</strong> 保存到 provider._scopeProvider 中。</p>
+</blockquote>
+<blockquote>
+<p><strong>ProviderRegistration</strong>集合:</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">private</span> <span class="token keyword">struct</span> ProviderRegistration
+<span class="token punctuation">{</span>
+   <span class="token keyword">public</span> ILoggerProvider Provider<span class="token punctuation">;</span>
+   <span class="token keyword">public</span> <span class="token keyword">bool</span> ShouldDispose<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>其中的 <strong>ShouldDispose</strong> 字段标识在在<code>LoggerFactory</code>生命周期结束之后，该<code>ILoggerProvider</code>是否需要释放。虽然在系统中<code>LoggerFactory</code>为单例模式，但是其提供了一个静态方法生成一个可释放的<code>DisposingLoggerFactory</code>。</p>
+</blockquote>
+<p>在<code>LoggerFactory</code> 实现默认的接口方法<code>CreateLogger()</code>,<code>AddProvider()</code></p>
+<p>查看源码如下：</p>
+<p><strong>CreateLogger</strong></p>
+<p>创建<code>ILogger</code>实例，<code>CreateLogger()</code> 源码如下：</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LoggerFactory</span> <span class="token punctuation">:</span> ILoggerFactory
+    <span class="token punctuation">{</span> 
+        <span class="token keyword">private</span> <span class="token keyword">readonly</span> Dictionary<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> Logger<span class="token operator">></span> _loggers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dictionary</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> Logger<span class="token operator">></span><span class="token punctuation">(</span>StringComparer<span class="token punctuation">.</span>Ordinal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+         <span class="token keyword">private</span> <span class="token keyword">readonly</span> List<span class="token operator">&lt;</span>ProviderRegistration<span class="token operator">></span> _providerRegistrations <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>ProviderRegistration<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> <span class="token keyword">struct</span> ProviderRegistration
+        <span class="token punctuation">{</span>
+            <span class="token keyword">public</span> ILoggerProvider Provider<span class="token punctuation">;</span>
+            <span class="token keyword">public</span> <span class="token keyword">bool</span> ShouldDispose<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> ILogger <span class="token function">CreateLogger</span><span class="token punctuation">(</span><span class="token keyword">string</span> categoryName<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">CheckDisposed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ObjectDisposedException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>LoggerFactory<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">lock</span> <span class="token punctuation">(</span>_sync<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>_loggers<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>categoryName<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token keyword">var</span> logger<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    logger <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Logger</span>
+                    <span class="token punctuation">{</span>
+                        Loggers <span class="token operator">=</span> <span class="token function">CreateLoggers</span><span class="token punctuation">(</span>categoryName<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">(</span>logger<span class="token punctuation">.</span>MessageLoggers<span class="token punctuation">,</span> logger<span class="token punctuation">.</span>ScopeLoggers<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">ApplyFilters</span><span class="token punctuation">(</span>logger<span class="token punctuation">.</span>Loggers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                    _loggers<span class="token punctuation">[</span>categoryName<span class="token punctuation">]</span> <span class="token operator">=</span> logger<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">return</span> logger<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">private</span> LoggerInformation<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">CreateLoggers</span><span class="token punctuation">(</span><span class="token keyword">string</span> categoryName<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> loggers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LoggerInformation</span><span class="token punctuation">[</span>_providerRegistrations<span class="token punctuation">.</span>Count<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> _providerRegistrations<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                loggers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LoggerInformation</span><span class="token punctuation">(</span>_providerRegistrations<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Provider<span class="token punctuation">,</span> categoryName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> loggers<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>从源码可以看出，<code>CreateLogger</code>方法中，会检测资源是否被释放，在方法中，根据内部定义的字典集合<code>Dictionary _loggers</code>,判断字典中是否存在对应的<code>Logger</code>属性对象，如果不存在，会调用<code>CreateLoggers</code>方法根据之前注册的的所有<code>ILoggerProvider</code>所创建出来 <strong>ProviderRegistration</strong> 集合来实现创建<code>Logger</code>属性集合（根据日志类别生成了对应实际的日志写入类<code>FileLogger</code>、<code>ConsoleLogger</code>等），并通过字典集合的方式保存<code>categoryName</code>和对应的<code>Logger</code>。</p>
+<blockquote>
+<p>创建 <strong>Logger</strong> 需要的 <code>LoggerInformation[]</code></p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">internal</span> <span class="token keyword">readonly</span> <span class="token keyword">struct</span> LoggerInformation
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token function">LoggerInformation</span><span class="token punctuation">(</span>ILoggerProvider provider<span class="token punctuation">,</span> <span class="token keyword">string</span> category<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+ProviderType <span class="token operator">=</span> provider<span class="token punctuation">.</span><span class="token function">GetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Logger <span class="token operator">=</span> provider<span class="token punctuation">.</span><span class="token function">CreateLogger</span><span class="token punctuation">(</span>category<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Category <span class="token operator">=</span> category<span class="token punctuation">;</span>
+ExternalScope <span class="token operator">=</span> provider <span class="token keyword">is</span> ISupportExternalScope<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> ILogger Logger <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">string</span> Category <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> Type ProviderType <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">bool</span> ExternalScope <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>根据注册的<strong>ILoggerProvider</strong>，创建<code>ILogger</code> 其中的字段说明：</p>
+<p>Logger ：具体日志类别写入途径实现类</p>
+<p>Category ： 日志类别名称</p>
+<p>ProviderType ： 日志提供器Type</p>
+<p>ExternalScope ：是否支持 ExternalScope</p>
+</blockquote>
+<p>继续看<code>CreateLogger</code>方法，在创建<code>Logger</code>之后，还调用了<code>ApplyFilters</code>方法：</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token keyword">private</span> <span class="token punctuation">(</span>MessageLogger<span class="token punctuation">[</span><span class="token punctuation">]</span> MessageLoggers<span class="token punctuation">,</span> ScopeLogger<span class="token punctuation">[</span><span class="token punctuation">]</span> ScopeLoggers<span class="token punctuation">)</span> <span class="token function">ApplyFilters</span><span class="token punctuation">(</span>LoggerInformation<span class="token punctuation">[</span><span class="token punctuation">]</span> loggers<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> messageLoggers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>MessageLogger<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> scopeLoggers <span class="token operator">=</span> _filterOptions<span class="token punctuation">.</span>CaptureScopes <span class="token operator">?</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>ScopeLogger<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> loggerInformation <span class="token keyword">in</span> loggers<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                RuleSelector<span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>_filterOptions<span class="token punctuation">,</span>
+                    loggerInformation<span class="token punctuation">.</span>ProviderType<span class="token punctuation">,</span>
+                    loggerInformation<span class="token punctuation">.</span>Category<span class="token punctuation">,</span>
+                    <span class="token keyword">out</span> <span class="token keyword">var</span> minLevel<span class="token punctuation">,</span>
+                    <span class="token keyword">out</span> <span class="token keyword">var</span> filter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>minLevel <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> minLevel <span class="token operator">></span> LogLevel<span class="token punctuation">.</span>Critical<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                messageLoggers<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MessageLogger</span><span class="token punctuation">(</span>loggerInformation<span class="token punctuation">.</span>Logger<span class="token punctuation">,</span> loggerInformation<span class="token punctuation">.</span>Category<span class="token punctuation">,</span> loggerInformation<span class="token punctuation">.</span>ProviderType<span class="token punctuation">.</span>FullName<span class="token punctuation">,</span> minLevel<span class="token punctuation">,</span> filter<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>loggerInformation<span class="token punctuation">.</span>ExternalScope<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    scopeLoggers<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ScopeLogger</span><span class="token punctuation">(</span>logger<span class="token punctuation">:</span> loggerInformation<span class="token punctuation">.</span>Logger<span class="token punctuation">,</span> externalScopeProvider<span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>_scopeProvider <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                scopeLoggers<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ScopeLogger</span><span class="token punctuation">(</span>logger<span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span> externalScopeProvider<span class="token punctuation">:</span> _scopeProvider<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>messageLoggers<span class="token punctuation">.</span><span class="token function">ToArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> scopeLoggers<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">ToArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p>由源码可以看出，</p>
+<p><strong>MessageLogger[]</strong> 集合取值：</p>
+<p>在获取<code>LoggerInformation[]</code>后进行传参，进行遍历，根据<code>RuleSelector</code>过滤器，从配置文件中读取对应的日志级别，过滤器会返回获取最低级别和对应的一条过滤规则，如果配置文件中没有对应的配置，默认取全局最低级别（MinLevel）,如果读取到的日志级别大于<code>LogLevel.Critical</code>,则将其加入<code>MessageLogger[]</code>。</p>
+<blockquote>
+<p>过滤器的规则：</p>
+<ol>
+<li>选择当前记录器类型的规则，如果没有，请选择未指定记录器类型的规则</li>
+<li>选择最长匹配类别的规则</li>
+<li>如果没有与类别匹配的内容，则采用所有没有类别的规则</li>
+<li>如果只有一条规则，则使用它的级别和过滤器</li>
+<li>如果有多个规则，请选择使用最后一条。</li>
+<li>如果没有适用的规则，请使用全局最低级别</li>
+</ol>
+</blockquote>
+<p>通过<code>MessageLogger[]</code>添加消息日志集合</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">internal</span> <span class="token keyword">readonly</span> <span class="token keyword">struct</span> MessageLogger
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">MessageLogger</span><span class="token punctuation">(</span>ILogger logger<span class="token punctuation">,</span> <span class="token keyword">string</span> category<span class="token punctuation">,</span> <span class="token keyword">string</span> providerTypeFullName<span class="token punctuation">,</span> LogLevel<span class="token operator">?</span> minLevel<span class="token punctuation">,</span> Func<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">string</span><span class="token punctuation">,</span> LogLevel<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token operator">></span> filter<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Logger <span class="token operator">=</span> logger<span class="token punctuation">;</span>
+        Category <span class="token operator">=</span> category<span class="token punctuation">;</span>
+        ProviderTypeFullName <span class="token operator">=</span> providerTypeFullName<span class="token punctuation">;</span>
+        MinLevel <span class="token operator">=</span> minLevel<span class="token punctuation">;</span>
+        Filter <span class="token operator">=</span> filter<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> ILogger Logger <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">string</span> Category <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">string</span> ProviderTypeFullName <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> LogLevel<span class="token operator">?</span> MinLevel <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> Func<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">string</span><span class="token punctuation">,</span> LogLevel<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token operator">></span> Filter <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">bool</span> <span class="token function">IsEnabled</span><span class="token punctuation">(</span>LogLevel level<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>MinLevel <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> level <span class="token operator">&lt;</span> MinLevel<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Filter <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token function">Filter</span><span class="token punctuation">(</span>ProviderTypeFullName<span class="token punctuation">,</span> Category<span class="token punctuation">,</span> level<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> <span class="token keyword">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">internal</span> <span class="token keyword">readonly</span> <span class="token keyword">struct</span> ScopeLogger
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">ScopeLogger</span><span class="token punctuation">(</span>ILogger logger<span class="token punctuation">,</span> IExternalScopeProvider externalScopeProvider<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Logger <span class="token operator">=</span> logger<span class="token punctuation">;</span>
+        ExternalScopeProvider <span class="token operator">=</span> externalScopeProvider<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> ILogger Logger <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> IExternalScopeProvider ExternalScopeProvider <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> IDisposable <span class="token generic-method function">CreateScope<span class="token punctuation">&lt;</span>TState<span class="token punctuation">></span></span><span class="token punctuation">(</span>TState state<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ExternalScopeProvider <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> ExternalScopeProvider<span class="token punctuation">.</span><span class="token function">Push</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> Logger<span class="token punctuation">.</span><span class="token generic-method function">BeginScope<span class="token punctuation">&lt;</span>TState<span class="token punctuation">></span></span><span class="token punctuation">(</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在<code>MessageLogger[]</code>中带有<strong>MinLevel</strong>属性和<strong>Filter</strong>委托两种过滤配置，而这两种配置的来源，在上一章中可以看到，分别是从配置文件（AddConfiguration）和直接使用委托（AddFilter）来进行配置的。</p>
+<p>再由上面的<code>IsEnabled</code>方法可以看出，会先使用 <code>MinLevel</code> 过滤，再使用 <code>Filter</code> 进行过滤。所以这两者存在优先级。</p>
+<p><strong>ScopeLogger[ ]</strong> 取值 :</p>
+<p>如果 <code>ILoggerProvider</code>实现了<code>ISupportExternalScope</code>接口，那么使用<code>LoggerExternalScopeProvider</code>作为<code>Scope</code>功能的实现。反之，使用<code>ILogger</code>作为其<code>Scope</code>功能的实现。</p>
+<blockquote>
+<p><code>LoggerExternalScopeProvider</code> ：</p>
+<ul>
+<li>通过 <code>Scope</code> 组成了一个单向链表，每次 <code>beginscope</code> 向链表末端增加一个新的元素，<code>Dispose</code>的时候，删除链表最末端的元素。我们知道<code>LoggerExternalScopeProvider</code> 在系统中是单例模式，多个请求进来，加入线程池处理。通过使用<code>AsyncLoca</code>来实现不同线程间数据独立。</li>
+<li>有两个地方开启了日志作用域：</li>
+<li>1、通过<code>socket</code>监听到请求后，将<code>KestrelConnection</code>加入线程池，线程池调度执行<code>IThreadPoolWorkItem.Execute()</code>方法。在这里开启了一次</li>
+<li>2、在构建请求上下文对象的时候(<code>HostingApplication.CreateContext()</code>)，开启了一次</li>
+</ul>
+</blockquote>
+<p>由上源码可以得出：在工厂记录器类中，通过系统<strong>依赖注入</strong>的方式解析所有注册的<code>ILoggerProvider</code>，然后调用其中的<code>CreateLogger</code>方法实现创建一个<code>Logger</code>实例对象，而这个<code>Logger</code>实例对象会根据根据注册的<code>ILoggerProvider</code>创建需要的<code>LoggerInformation[]</code>，并将此对象作为参数进行<code>ApplyFilters</code>过滤器筛选,得到对应的最低等级或过滤规则，最后通过调用<code>Log</code>方法日志记录的时候，会遍历<code>MessageLogger[]</code>集合，根据<code>logger</code>日志类别对应实际不同的日志写入类，调用<code>ILoggerProvider</code>具体实现类 (可以看下文说明) 中的<code>Log</code>方法。</p>
+<blockquote>
+<p>AddProviderRegistration→CreateLoggers→LoggerInformation[]→ApplyFilters→MessageLogger[]→Log→ILoggerProvider ( 执行具体类中的Log方法 )</p>
+</blockquote>
+<blockquote>
+<p><code>ILoggerFactory</code> <strong>来源</strong>：</p>
+<p>在上一篇中我们在对日志配置进行说明的时候，应用程序在启动初始化的时候会通过注入的方式<code>CreateDefaultBuilder</code>→<code>ConfigureLogging</code>→<code>AddLogging</code></p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">static</span> IServiceCollection <span class="token function">AddLogging</span><span class="token punctuation">(</span><span class="token keyword">this</span> IServiceCollection services<span class="token punctuation">,</span> Action<span class="token operator">&lt;</span>ILoggingBuilder<span class="token operator">></span> configure<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>services <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token function">nameof</span><span class="token punctuation">(</span>services<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+services<span class="token punctuation">.</span><span class="token function">AddOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+services<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token generic-method function">Singleton<span class="token punctuation">&lt;</span>ILoggerFactory<span class="token punctuation">,</span> LoggerFactory<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+services<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span><span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span>ILogger<span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span>Logger<span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+services<span class="token punctuation">.</span><span class="token function">TryAddEnumerable</span><span class="token punctuation">(</span>ServiceDescriptor<span class="token punctuation">.</span>Singleton<span class="token operator">&lt;</span>IConfigureOptions<span class="token operator">&lt;</span>LoggerFilterOptions<span class="token operator">></span><span class="token operator">></span><span class="token punctuation">(</span>
+   <span class="token keyword">new</span> <span class="token class-name">DefaultLoggerLevelConfigureOptions</span><span class="token punctuation">(</span>LogLevel<span class="token punctuation">.</span>Information<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">configure</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoggingBuilder</span><span class="token punctuation">(</span>services<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">return</span> services<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>实现将把<code>ILoggerFactory</code>对象以依赖注入的方式托管到集合容器中，为程序调用提供使用。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805204832261-1339141968.jpg"><img src="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805204832261-1339141968.jpg" alt="logging"></a></p>
+<h3 id="3-2-日志记录提供器"><a href="#3-2-日志记录提供器" class="headerlink" title="3.2 日志记录提供器"></a>3.2 日志记录提供器</h3><h4 id="3-2-1-ILoggerProvider-接口"><a href="#3-2-1-ILoggerProvider-接口" class="headerlink" title="3.2.1 ILoggerProvider 接口"></a>3.2.1 ILoggerProvider 接口</h4><p>创建<code>ILogger</code>实例的类型，根据日志类别名称创建一个新的<code>ILogger</code>实例</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ILoggerProvider</span> <span class="token punctuation">:</span> IDisposable
+<span class="token punctuation">{</span>
+    ILogger <span class="token function">CreateLogger</span><span class="token punctuation">(</span><span class="token keyword">string</span> categoryName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这个是具体的日志写入类，在工厂记录器中我们已经提到了这个，在<code>LoggerInformation[]</code>中会根据日志类别注册对应的<code>ILoggerProvider</code>，在系统中我们就可以通过<code>ILogger</code>同时向多个途经写入日志信息。（这也是对上一篇中留下的问题进行再次说明）</p>
+<blockquote>
+<p><code>ILoogerProvider</code>继承了<code>IDisposable</code>接口，如果某个具体的<code>ILoggerProvider</code>对象需要释放资源，就可以将相关的操作实现在<code>Dispose</code>方法中。</p>
+</blockquote>
+<p>默认的实现方式为多个，官方实现的由<code>ConsoleLoggerProvider</code> 、<code>DebugLoggerProvider</code> 、<code>EventSourceLoggerProvider</code>、<code>EventLogLoggerProvider</code>、<code>TraceSourceLoggerProvider</code></p>
+<p>以<code>ConsoleLoggerProvider</code>为列</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token punctuation">[</span><span class="token function">ProviderAlias</span><span class="token punctuation">(</span><span class="token string">"Console"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConsoleLoggerProvider</span> <span class="token punctuation">:</span> ILoggerProvider<span class="token punctuation">,</span> ISupportExternalScope
+    <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">readonly</span> IOptionsMonitor<span class="token operator">&lt;</span>ConsoleLoggerOptions<span class="token operator">></span> _options<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">readonly</span> ConcurrentDictionary<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> ConsoleLogger<span class="token operator">></span> _loggers<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">readonly</span> ConsoleLoggerProcessor _messageQueue<span class="token punctuation">;</span>
+
+        <span class="token keyword">private</span> IDisposable _optionsReloadToken<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> IExternalScopeProvider _scopeProvider <span class="token operator">=</span> NullExternalScopeProvider<span class="token punctuation">.</span>Instance<span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token function">ConsoleLoggerProvider</span><span class="token punctuation">(</span>IOptionsMonitor<span class="token operator">&lt;</span>ConsoleLoggerOptions<span class="token operator">></span> options<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            _options <span class="token operator">=</span> options<span class="token punctuation">;</span>
+            _loggers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentDictionary</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> ConsoleLogger<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token function">ReloadLoggerOptions</span><span class="token punctuation">(</span>options<span class="token punctuation">.</span>CurrentValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            _optionsReloadToken <span class="token operator">=</span> _options<span class="token punctuation">.</span><span class="token function">OnChange</span><span class="token punctuation">(</span>ReloadLoggerOptions<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            _messageQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConsoleLoggerProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>RuntimeInformation<span class="token punctuation">.</span><span class="token function">IsOSPlatform</span><span class="token punctuation">(</span>OSPlatform<span class="token punctuation">.</span>Windows<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                _messageQueue<span class="token punctuation">.</span>Console <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WindowsLogConsole</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                _messageQueue<span class="token punctuation">.</span>ErrorConsole <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WindowsLogConsole</span><span class="token punctuation">(</span>stdErr<span class="token punctuation">:</span> <span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span>
+            <span class="token punctuation">{</span>
+                _messageQueue<span class="token punctuation">.</span>Console <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AnsiLogConsole</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AnsiSystemConsole</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                _messageQueue<span class="token punctuation">.</span>ErrorConsole <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AnsiLogConsole</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AnsiSystemConsole</span><span class="token punctuation">(</span>stdErr<span class="token punctuation">:</span> <span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">ReloadLoggerOptions</span><span class="token punctuation">(</span>ConsoleLoggerOptions options<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> logger <span class="token keyword">in</span> _loggers<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                logger<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Options <span class="token operator">=</span> options<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> ILogger <span class="token function">CreateLogger</span><span class="token punctuation">(</span><span class="token keyword">string</span> name<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> _loggers<span class="token punctuation">.</span><span class="token function">GetOrAdd</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> loggerName <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">ConsoleLogger</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> _messageQueue<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                Options <span class="token operator">=</span> _options<span class="token punctuation">.</span>CurrentValue<span class="token punctuation">,</span>
+                ScopeProvider <span class="token operator">=</span> _scopeProvider
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> 
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            _optionsReloadToken<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            _messageQueue<span class="token punctuation">.</span><span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">SetScopeProvider</span><span class="token punctuation">(</span>IExternalScopeProvider scopeProvider<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            _scopeProvider <span class="token operator">=</span> scopeProvider<span class="token punctuation">;</span>
+
+            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> logger <span class="token keyword">in</span> _loggers<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                logger<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>ScopeProvider <span class="token operator">=</span> _scopeProvider<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>在<code>ConsoleLoggerProvider</code>类型定义中，标注了<code>ProviderAliasAttribute</code>特性，并设置别名为<code>Console</code>,所以在配置过滤规则的时候，可以直接使用这个名称。<code>ILogger</code>的创建实现了具体日志类<code>ConsoleLogger</code>。<br><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805204901992-1817017747.jpg"><img src="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805204901992-1817017747.jpg" alt="LogerProvider"></a></p>
+<h3 id="3-3-日志记录器"><a href="#3-3-日志记录器" class="headerlink" title="3.3 日志记录器"></a>3.3 日志记录器</h3><h4 id="3-3-1-ILogger-接口"><a href="#3-3-1-ILogger-接口" class="headerlink" title="3.3.1 ILogger 接口"></a>3.3.1 ILogger 接口</h4><p>表示用于执行日志记录的类型，是系统中写入日志的统一入口。</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ILogger</span>
+<span class="token punctuation">{</span> 
+    <span class="token keyword">void</span> <span class="token generic-method function">Log<span class="token punctuation">&lt;</span>TState<span class="token punctuation">></span></span><span class="token punctuation">(</span>LogLevel logLevel<span class="token punctuation">,</span> EventId eventId<span class="token punctuation">,</span> TState state<span class="token punctuation">,</span> Exception exception<span class="token punctuation">,</span> Func<span class="token operator">&lt;</span>TState<span class="token punctuation">,</span> Exception<span class="token punctuation">,</span> <span class="token keyword">string</span><span class="token operator">></span> formatter<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+    <span class="token keyword">bool</span> <span class="token function">IsEnabled</span><span class="token punctuation">(</span>LogLevel logLevel<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+    IDisposable <span class="token generic-method function">BeginScope<span class="token punctuation">&lt;</span>TState<span class="token punctuation">></span></span><span class="token punctuation">(</span>TState state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>定义了三个方法，<code>Log()</code> 用于写入日志，<code>IsEnabled()</code>用于检查判断日志级别是否开启，<code>BeginScope()</code> 用于指日志作用域。</p>
+<h4 id="3-3-2-Logger-实现"><a href="#3-3-2-Logger-实现" class="headerlink" title="3.3.2 Logger 实现"></a>3.3.2 Logger 实现</h4><p><code>ILogger</code>执行记录接口类的具体实现<code>Logger</code>如下：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">internal</span> <span class="token keyword">class</span> <span class="token class-name">Logger</span> <span class="token punctuation">:</span> ILogger
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> LoggerInformation<span class="token punctuation">[</span><span class="token punctuation">]</span> Loggers <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> MessageLogger<span class="token punctuation">[</span><span class="token punctuation">]</span> MessageLoggers <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> ScopeLogger<span class="token punctuation">[</span><span class="token punctuation">]</span> ScopeLoggers <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token generic-method function">Log<span class="token punctuation">&lt;</span>TState<span class="token punctuation">></span></span><span class="token punctuation">(</span>LogLevel logLevel<span class="token punctuation">,</span> EventId eventId<span class="token punctuation">,</span> TState state<span class="token punctuation">,</span> Exception exception<span class="token punctuation">,</span> Func<span class="token operator">&lt;</span>TState<span class="token punctuation">,</span> Exception<span class="token punctuation">,</span> <span class="token keyword">string</span><span class="token operator">></span> formatter<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> loggers <span class="token operator">=</span> MessageLoggers<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>loggers <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        List<span class="token operator">&lt;</span>Exception<span class="token operator">></span> exceptions <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> loggers<span class="token punctuation">.</span>Length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">ref</span> <span class="token keyword">readonly</span> <span class="token keyword">var</span> loggerInfo <span class="token operator">=</span> <span class="token keyword">ref</span> loggers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>loggerInfo<span class="token punctuation">.</span><span class="token function">IsEnabled</span><span class="token punctuation">(</span>logLevel<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token function">LoggerLog</span><span class="token punctuation">(</span>logLevel<span class="token punctuation">,</span> eventId<span class="token punctuation">,</span> loggerInfo<span class="token punctuation">.</span>Logger<span class="token punctuation">,</span> exception<span class="token punctuation">,</span> formatter<span class="token punctuation">,</span> <span class="token keyword">ref</span> exceptions<span class="token punctuation">,</span> state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>exceptions <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> exceptions<span class="token punctuation">.</span>Count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">ThrowLoggingError</span><span class="token punctuation">(</span>exceptions<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">LoggerLog</span><span class="token punctuation">(</span>LogLevel logLevel<span class="token punctuation">,</span> EventId eventId<span class="token punctuation">,</span> ILogger logger<span class="token punctuation">,</span> Exception exception<span class="token punctuation">,</span> Func<span class="token operator">&lt;</span>TState<span class="token punctuation">,</span> Exception<span class="token punctuation">,</span> <span class="token keyword">string</span><span class="token operator">></span> formatter<span class="token punctuation">,</span> <span class="token keyword">ref</span> List<span class="token operator">&lt;</span>Exception<span class="token operator">></span> exceptions<span class="token punctuation">,</span> <span class="token keyword">in</span> TState state<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">try</span>
+            <span class="token punctuation">{</span>
+                logger<span class="token punctuation">.</span><span class="token function">Log</span><span class="token punctuation">(</span>logLevel<span class="token punctuation">,</span> eventId<span class="token punctuation">,</span> state<span class="token punctuation">,</span> exception<span class="token punctuation">,</span> formatter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> ex<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>exceptions <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    exceptions <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>Exception<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                exceptions<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>ex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">bool</span> <span class="token function">IsEnabled</span><span class="token punctuation">(</span>LogLevel logLevel<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> loggers <span class="token operator">=</span> MessageLoggers<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>loggers <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        List<span class="token operator">&lt;</span>Exception<span class="token operator">></span> exceptions <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> loggers<span class="token punctuation">.</span>Length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">ref</span> <span class="token keyword">readonly</span> <span class="token keyword">var</span> loggerInfo <span class="token operator">=</span> <span class="token keyword">ref</span> loggers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>loggerInfo<span class="token punctuation">.</span><span class="token function">IsEnabled</span><span class="token punctuation">(</span>logLevel<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">LoggerIsEnabled</span><span class="token punctuation">(</span>logLevel<span class="token punctuation">,</span> loggerInfo<span class="token punctuation">.</span>Logger<span class="token punctuation">,</span> <span class="token keyword">ref</span> exceptions<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>exceptions <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> exceptions<span class="token punctuation">.</span>Count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">ThrowLoggingError</span><span class="token punctuation">(</span>exceptions<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> i <span class="token operator">&lt;</span> loggers<span class="token punctuation">.</span>Length <span class="token operator">?</span> <span class="token keyword">true</span> <span class="token punctuation">:</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">static</span> <span class="token keyword">bool</span> <span class="token function">LoggerIsEnabled</span><span class="token punctuation">(</span>LogLevel logLevel<span class="token punctuation">,</span> ILogger logger<span class="token punctuation">,</span> <span class="token keyword">ref</span> List<span class="token operator">&lt;</span>Exception<span class="token operator">></span> exceptions<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">try</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">IsEnabled</span><span class="token punctuation">(</span>logLevel<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">return</span> <span class="token keyword">true</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> ex<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>exceptions <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    exceptions <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>Exception<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                exceptions<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>ex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">return</span> <span class="token keyword">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>源码中<code>MessageLogger[]</code>在上文已经提到了，其中保存了在配置中启用的那些对应的<code>ILogger</code>。</p>
+<blockquote>
+<p>需要注意的是，由于配置文件更改后，会调用<code>ApplyFilters()</code>方法，并为<code>MessageLogger[]</code>赋新值，所以在遍历之前，需要保存当前值，再进行处理。否则会出现修改异常。</p>
+</blockquote>
+<p>在系统中统一写入日志的入口，通过日志等级作为参数调用其<code>IsEnabled</code>方法来确定当前日志是否执行对应具体日志的实现类，当符合条件执行具体日志输出到对应的写入途径中会调用对应的<code>Log</code>方法（需要提供一个<code>EventId</code>来标识当前日志事件）</p>
+<blockquote>
+<p><code>ILogger</code>默认的实现方式为多个，官方实现的由<code>ConsoleLogger</code> 、<code>DebugLogger</code> 、<code>EventSourceLogger</code>、<code>EventLogLogger</code>、<code>TraceSourceLogger</code> 具体日志实现类代表不同的日志写入途径。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805204923623-1536977055.jpg"><img src="https://img2020.cnblogs.com/blog/1576550/202008/1576550-20200805204923623-1536977055.jpg" alt="logger"></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>在<code>ILoggerFactory</code>和<code>ILoggerProvider</code>中都会通过方法创建<strong>ILogger</strong>对象，但两者是不相同的。在工厂默认实现<code>LoggerFactory</code>类型中它创建的<strong>ILogger</strong>对象是由注册到<code>LoggerFactory</code>对象上的所有ILoggerProvider对象提供一组 <strong>ILogger</strong>对象组合而成。而日志提供器<code>ILoggerProvider</code>创建的<strong>ILogger</strong>是日志实现输出到对应的渠道目标，写入日志。</li>
+<li>日志记录器<code>ILogger</code>中的<strong>Log()**方法会记录执行日志，在日志记录器工厂<code>ILoggerFactory</code>和日志记录提供器<code>ILoggerProvider</code>中两种不同的<code>ILogger</code>实现对应的<code>Log()</code>方法实现的意思也是不同的。在<code>ILoggerFactory</code>产生的是<code>ILogger</code>类型（也就是我们最终使用的<code>Logger</code>），其</strong>Log()<strong>方法是依次调用<code>Logger</code>中包含的<code>LoggerInformation[]</code>数组中的<code>ILogger</code>。而<code>ILoggerProvider</code>产生的为各类不同的XxxLogger（也就是上面说的<code>Logger</code>中的<code>LoggerInformation</code>数组包含的如ConsoleLogger、<code>DebugLogger</code>），其</strong>Log()**方法是把日志写到具体的目标上去。</li>
+<li>由上文可以发现，在asp.net core提供的日志记录的组件，通过工厂的一种方式，将日志记录器和日志记录提供器都放入到工厂这样的容器中，满足定义多个不同的记录方式。在后续我们可以通过自定义<code>ILoggerProvider</code>集成到<code>Logger</code>中，实现自己需要的日志记录输出方式。</li>
+<li>如果有不对的或不理解的地方，希望大家可以多多指正，提出问题，一起讨论,不断学习,共同进步。</li>
+<li>官方<a target="_blank" rel="noopener" href="https://github.com/dotnet/extensions/tree/master/src/Logging">源码</a> 和 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/logging/?view=aspnetcore-3.1">参考资料</a></li>
+</ol>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">艾三元</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://i3yuan.github.io/2020/08/05/ji-yu.netcore3.1-xi-lie-ri-zhi-ji-lu-zhi-ri-zhi-he-xin-yao-su-jie-mi/">https://i3yuan.github.io/2020/08/05/ji-yu.netcore3.1-xi-lie-ri-zhi-ji-lu-zhi-ri-zhi-he-xin-yao-su-jie-mi/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">艾三元</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/net-core/">
+                                    <span class="chip bg-color">.net core</span>
+                                </a>
+                            
+                                <a href="/tags/Logging/">
+                                    <span class="chip bg-color">Logging</span>
+                                </a>
+                            
+                                <a href="/tags/aspnetcore%E6%BA%90%E7%A0%81/">
+                                    <span class="chip bg-color">aspnetcore源码</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/08/11/ji-yu.netcore3.1-xi-lie-ri-zhi-ji-lu-zhi-zi-ding-yi-ri-zhi-zu-jian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/43.jpg" class="responsive-img" alt=" 基于.NetCore3.1系列 —— 日志记录之自定义日志组件">
+                        
+                        <span class="card-title"> 基于.NetCore3.1系列 —— 日志记录之自定义日志组件</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于.NetCore3.1系列 —— 日志记录之自定义日志组件前言回顾：日志记录之日志核心要素揭秘
+在上一篇中，我们通过学习了解在.net core 中内置的日志记录中的几大核心要素，在日志工厂记录器(ILoggerFactory)中实现将
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-11
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                    <a href="/tags/Logging/">
+                        <span class="chip bg-color">Logging</span>
+                    </a>
+                    
+                    <a href="/tags/aspnetcore%E6%BA%90%E7%A0%81/">
+                        <span class="chip bg-color">aspnetcore源码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/07/31/ji-yu.netcore3.1-xi-lie-ri-zhi-ji-lu-zhi-ri-zhi-pei-zhi-jie-mi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="基于.NetCore3.1系列 —— 日志记录之日志配置揭秘">
+                        
+                        <span class="card-title">基于.NetCore3.1系列 —— 日志记录之日志配置揭秘</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于.NetCore3.1系列 —— 日志记录之日志配置揭秘前言在项目的开发维护阶段，有时候我们关注的问题不仅仅在于功能的实现，甚至需要关注系统发布上线后遇到的问题能否及时的查找并解决。所以我们需要有一个好的解决方案来及时的定位错误的根源并
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-31
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                    <a href="/tags/Logging/">
+                        <span class="chip bg-color">Logging</span>
+                    </a>
+                    
+                    <a href="/tags/aspnetcore%E6%BA%90%E7%A0%81/">
+                        <span class="chip bg-color">aspnetcore源码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">艾三元</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+           <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>-->
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/i3yuan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

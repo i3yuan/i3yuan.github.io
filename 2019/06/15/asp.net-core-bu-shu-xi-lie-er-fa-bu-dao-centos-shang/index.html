@@ -1,0 +1,1100 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer"/>
+    <meta name="keywords" content="ASP.NET Core部署系列二：发布到CentOS上, 艾三元">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>ASP.NET Core部署系列二：发布到CentOS上 | 艾三元</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">艾三元</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+      
+      <i class="fas fa-blog" style="zoom: 0.6;"></i>
+      
+      <span>博客</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">艾三元</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-blog"></i>
+			
+			博客
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/i3yuan" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/i3yuan" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">ASP.NET Core部署系列二：发布到CentOS上</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/NetCore/">
+                                <span class="chip bg-color">.NetCore</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/">
+                                <span class="chip bg-color">部署环境</span>
+                            </a>
+                        
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                DotCore/C#
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-06-15
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="ASP-NET-Core部署系列二：发布到CentOS上"><a href="#ASP-NET-Core部署系列二：发布到CentOS上" class="headerlink" title="ASP.NET Core部署系列二：发布到CentOS上"></a>ASP.NET Core部署系列二：发布到CentOS上</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/i3yuan/p/10988358.html">上一节</a>中，通过一系列的步骤，已经将项目部署到IIS上，虽然遇到了一些问题，但最终解决并成功运行了。而在这一节中，将尝试通过linux系统的环境下,部署项目，实现Net Core跨平台的亮点。</p>
+<p>虽然网上已经有很多关于asp.net core在linux下的部署教程了，但我还是想写一篇，主要增强我自己的记忆，同时分享下我部署遇到的坑。</p>
+<p>我在我电脑win7的操作系统中用来虚拟机建了个CentOS7,来演示，我们的项目如何发布在Linux上运行。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="一、安装-Dotnet-Core-2-2"><a href="#一、安装-Dotnet-Core-2-2" class="headerlink" title="一、安装.Dotnet Core 2.2"></a>一、安装.Dotnet Core 2.2</h3><p> Linux上运行Dotnet Core程序的前提是安装Dotnet Core Runtime，如果想要在Linux做 .NET Core的开发和编译工作，那么需要安装 <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download/linux-package-manager/centos/sdk-current">Dotnet Core SDK</a>。Dotnet Core SDK中包括了Dotnet Core Runtime，所以这里就直接安装了Dotnet Core SDK</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615164520341-1759462081.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615164520341-1759462081.png" alt="img"></a></p>
+<p> Step 1：安装Dotnet产品的必要前提</p>
+<p> 在安装Dotnet Core前，需要注册Microsoft签名密钥并添加Microsoft产品提要，每台机器只需注册一次，执行如下命令：</p>
+<pre><code>sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm</code></pre>
+<p> Step 2：安装Dotnet Core SDk，执行下列命令</p>
+<pre><code>sudo yum update
+y
+sudo yum install dotnet-sdk-2.2
+y
+  大家注意，会有两个“y”的原因是，命令执行的中途停顿了，让你确认下是否进行安装，你要输入“y”确认安装才会执行安装
+
+  安装完后，我们输入如下命令看下是否安装成功</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615164930802-494875697.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615164930802-494875697.png" alt="img"></a></p>
+<h3 id="二、部署Asp-net-Core-应用程序"><a href="#二、部署Asp-net-Core-应用程序" class="headerlink" title="二、部署Asp.net Core 应用程序"></a>二、部署Asp.net Core 应用程序</h3><p> <strong>在CentOS系统中，新建publish文件夹</strong></p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165147367-987774383.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165147367-987774383.png" alt="img"></a></p>
+<p> 上传<a target="_blank" rel="noopener" href="https://www.cnblogs.com/i3yuan/p/10988358.html">上一节</a>发布的文件到至/home/publish/。</p>
+<p> 这边我使用了Xftp进行文件的上传。（如果是在本地虚拟机操作的话，也可以直接复制到系统对应的文件夹目录下）</p>
+<p> <strong>进入目录：cd publish</strong></p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165405145-1868405077.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165405145-1868405077.png" alt="img"></a></p>
+<p>  <strong>检查是否可以运行：dotnet LCzarCms.Admin.dll</strong></p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165437438-917731895.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165437438-917731895.png" alt="img"></a></p>
+<p> 如果出现这些信息则表示成功运行</p>
+<p> <a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165453321-1804454540.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615165453321-1804454540.png" alt="img"></a></p>
+<p> 到此，项目就运行成功了，这时候我们是无法访问到这个页面的，这时候我们需要部署一个web容器来进行转发，我们可能还要安装 nginx 、配置我们的 FireWall 以及配置守护服务 Supervisor 等等</p>
+<h3 id="三、配置Nginx托管"><a href="#三、配置Nginx托管" class="headerlink" title="三、配置Nginx托管"></a>三、配置Nginx托管</h3><p> 微软官方提供的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-2.2#monitor-the-app%EF%BC%8C%E6%8A%8Adotnet%E5%88%9B%E5%BB%BA%E6%88%90%E4%B8%80%E4%B8%AA%E6%9C%8D%E5%8A%A1">https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-2.2#monitor-the-app，把dotnet创建成一个服务</a></p>
+<p> <strong>安装nginx</strong></p>
+<pre class=" language-bash"><code class="language-bash">curl -o  nginx.rpm http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170106969-330192408.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170106969-330192408.png" alt="img"></a></p>
+<pre class=" language-shell"><code class="language-shell"> rpm -ivh nginx.rpm</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170144495-1390746366.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170144495-1390746366.png" alt="img"></a></p>
+<pre class=" language-shell"><code class="language-shell">yum install nginx</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170216719-1658333328.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170216719-1658333328.png" alt="img"></a></p>
+<p> <strong>启动</strong> <strong>Nginx</strong>：</p>
+<pre class=" language-shell"><code class="language-shell">systemctl start nginx</code></pre>
+<p> <strong>设置开机启动</strong>（linux宕机、重启会自动运行nginx不需要连上去输入命令）：</p>
+<pre class=" language-shell"><code class="language-shell">systemctl enable nginx</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170321208-468281574.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170321208-468281574.png" alt="img"></a></p>
+<h3 id="四、配置防火墙"><a href="#四、配置防火墙" class="headerlink" title="四、配置防火墙"></a>四、配置防火墙</h3><p> <strong>开放80端口</strong>：</p>
+<pre class=" language-shell"><code class="language-shell">firewall-cmd --zone=public --add-port=80/tcp –permanent</code></pre>
+<p> <strong>重启防火墙以使配置即时生效</strong>：</p>
+<pre class=" language-shell"><code class="language-shell">systemctl restart firewalld</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170501351-1892243798.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170501351-1892243798.png" alt="img"></a></p>
+<p> <strong>测试nginx是否可以访问</strong></p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170517984-2072450028.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170517984-2072450028.png" alt="img"></a></p>
+<h3 id="五、配置Nginx对ASP-net-Core-应用的转发"><a href="#五、配置Nginx对ASP-net-Core-应用的转发" class="headerlink" title="五、配置Nginx对ASP.net Core 应用的转发"></a>五、配置Nginx对ASP.net Core 应用的转发</h3><p> <strong>修改Nginx的default.conf文件</strong></p>
+<p> <a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170621321-2053993723.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170621321-2053993723.png" alt="img"></a></p>
+<p> 将文件内容替换为：</p>
+<pre class=" language-shell"><code class="language-shell">server {
+    listen 80;
+    location / {
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection keep-alive;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}</code></pre>
+<p> 进行修改覆盖</p>
+<p> <strong>重新加载，即时生效</strong>：</p>
+<pre class=" language-shell"><code class="language-shell">nginx -s reload</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170820720-44536001.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170820720-44536001.png" alt="img"></a></p>
+<p> 再次运行ASP.NET Core应用程序</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170838729-516777564.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170838729-516777564.png" alt="img"></a></p>
+<p> 但是，测试我们再次浏览运行的时候，会出现如下这种情况：</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170926935-691393282.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615170926935-691393282.png" alt="img"></a></p>
+<p> 这是什么情况？经过后续了解，这个问题是由于SELinux保护机制所导致，我们需要将nginx添加至SELinux的白名单</p>
+<p> 接下来我们通过一些命令解决这个问题</p>
+<pre class=" language-shell"><code class="language-shell">①   yum install policycoreutils-python</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171012901-492396132.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171012901-492396132.png" alt="img"></a></p>
+<pre class=" language-shell"><code class="language-shell">②     sudo cat /var/log/audit/audit.log | grep nginx | grep denied | audit2allow -M mynginx</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171110113-1588533631.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171110113-1588533631.png" alt="img"></a></p>
+<pre class=" language-shell"><code class="language-shell">③     sudo semodule -i mynginx.pp</code></pre>
+<p> 我们再次访问运行一下：</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171203441-903715426.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171203441-903715426.png" alt="img"></a></p>
+<p> 这次已经可以成功的运行起来了。</p>
+<p> <strong>至此基本完成了部署</strong>。</p>
+<p>但是，我们还是存在着其他的问题：</p>
+<p> 1.<strong>ASP.NET Core</strong>应用程序运行在<strong>shell</strong>之中，如果关闭<strong>shell</strong>则会发现<strong>ASP.NET Core</strong>应用被关闭，从而导致应用无法访问，这种情况当然是我们不想遇到的，而且生产环境对这种情况是零容忍的。</p>
+<p> 2.<strong>如果</strong>ASP.NET Core<strong>进程意外终止那么需要人为连进shell进行再次启动，往往这种操作都不够及时。</strong></p>
+<p> 3.<strong>如果服务器宕机或需要重启我们则还是需要连入shell进行启动</strong>。</p>
+<p> 为了解决这些问题，我们需要有一个程序来监听ASP.NET Core 应用程序的状况。</p>
+<p> 那么要解决这些问题，我们就必须要实现这么一个功能：如果ASP.NET Core 意外终止，那么我们要自动重启；如果服务器服务器重启后，我们要有个类似脚本命令一样，自动执行 dotnet 命令。现在正好有个基于 Python 开发的工具 Supervisor 可以解决我们上述问题</p>
+<p>六、配置Supervisor守护服务</p>
+<p> 在应用程序停止运行的时候立即重新启动。这边我们用到了Supervisor这个工具，Supervisor使用Python开发的。</p>
+<p> <strong>安装Supervisor</strong>：</p>
+<pre class=" language-shell"><code class="language-shell">yum install python-setuptools</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171828889-638782086.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171828889-638782086.png" alt="img"></a></p>
+<pre class=" language-shell"><code class="language-shell">easy_install supervisor</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171855299-1195992512.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615171855299-1195992512.png" alt="img"></a></p>
+<p> <strong>配置Supervisor</strong>：</p>
+<p>①运行supervisord 服务的时候，需要指定 Supervisor 配置文件，所以，先通过如下命令创建目录，以便让 supervisor 成功加载默认配置：</p>
+<pre class=" language-shell"><code class="language-shell">mkdir /etc/supervisor</code></pre>
+<p>②目录创建成功后, 通过 echo_supervisord_conf 程序（用来生成初始配置文件,文件名可以自定义）来初始化一个配置文件： </p>
+<pre class=" language-shell"><code class="language-shell">echo_supervisord_conf > /etc/supervisor/supervisord.conf</code></pre>
+<p>③通过vim命令修改创建好的supervisord.conf配置信息：</p>
+<pre class=" language-shell"><code class="language-shell">vi /etc/supervisor/supervisord.conf</code></pre>
+<p>④最下边找到如下文本片段：</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172045505-288073919.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172045505-288073919.png" alt="img"></a></p>
+<p> 修改为：</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172056907-850403774.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172056907-850403774.png" alt="img"></a></p>
+<p> <strong>为我们部署的.NET Core添加进程配置文件</strong>：</p>
+<p>①创建配置文件LCzarCmsAdmin.ini(文件名自定义)</p>
+<pre class=" language-shell"><code class="language-shell">[program:LCzarCmsAdmin]
+command=dotnet /root/publish/LCzarCms.Admin.dll
+directory=/root/publish/
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/LCzarCms.err.log
+stdout_logfile=/var/log/LCzarCms.out.log
+environment=ASPNETCORE_ENVIRONMENT=Production
+user=root
+stopsignal=INT</code></pre>
+<p>②在/etc/supervisor/目录下创建一个文件夹conf.d</p>
+<pre class=" language-shell"><code class="language-shell">mkdir /etc/supervisor/conf.d/</code></pre>
+<p> 将刚创建的配置文件LCzarCmsAdmin.ini移到conf.d文件夹下</p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172339866-884463152.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172339866-884463152.png" alt="img"></a></p>
+<p> 如果服务已经启动，则需要使用 supervisorctl reload 命令来使新的配置生效，当然，我们这里并没有启动，所以不需要这一步。</p>
+<p> <strong>启动 Supervisor 服务</strong></p>
+<pre class=" language-shell"><code class="language-shell">supervisord -c /etc/supervisor/supervisord.conf</code></pre>
+<p> <strong>启动服务后，我们可以检测看一下</strong>：</p>
+<pre class=" language-shell"><code class="language-shell">ps -ef | grep LCzarCms.Admin.dll</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172542403-1508420852.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172542403-1508420852.png" alt="img"></a></p>
+<p> 这个时候, 我们已经不需要使用dotnet命令运行程序, 同样可以访问我们部署的.NET Core程序了。</p>
+<p> <strong>至此关于ASP.NET Core应用程序的守护即配置完成</strong>。</p>
+<p>七、配置Supervisor开机启动：</p>
+<p>①进入/usr/lib/systemd/system/目录，并创建supervisord.service文件(或者在本地写好了再通过ftp工具传输到指定目录下)</p>
+<pre class=" language-shell"><code class="language-shell">vi /usr/lib/systemd/system/supervisord.service</code></pre>
+<p> 修改文件</p>
+<pre class=" language-shell"><code class="language-shell">[Unit]
+Description=Supervisor daemon
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+ExecStop=/usr/bin/supervisorctl $OPTIONS shutdown
+ExecReload=/usr/bin/supervisorctl $OPTIONS reload
+KillMode=process
+Restart=on-failure
+RestartSec=42s</code></pre>
+<p>②设置开机启动</p>
+<p> 激活开机启动：</p>
+<pre class=" language-shell"><code class="language-shell">systemctl enable supervisord.service</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172847010-292877124.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615172847010-292877124.png" alt="img"></a></p>
+<p> 启动supervisor进程：</p>
+<pre class=" language-shell"><code class="language-shell">systemctl start supervisord.service
+
+systemctl daemon-reload</code></pre>
+<p> 验证一下是否为开机启动：</p>
+<pre class=" language-shell"><code class="language-shell">systemctl is-enabled supervisord</code></pre>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615173001736-962815921.png"><img src="https://img2018.cnblogs.com/blog/1576550/201906/1576550-20190615173001736-962815921.png" alt="img"></a></p>
+<p> 重启，测试是否可以开机自启</p>
+<p> <strong>好了。最终也成功的在重启之后，可以访问地址。</strong></p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
+<li><p>在虚拟机上安装CentOS7操作系统，这里就不做具体的安装内容了，可以参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ce08cdbc4ddb">VMwear安装Centos7</a></p>
+</li>
+<li><p>学习了linux(CentOS) 环境下，新建、删除、移动文件夹和文件的命令。同时，Linux下路径是区分目录大小写的</p>
+</li>
+<li><p>很多东西都是翻阅了网上大神的资料加上自己的实践理解总结记录的。如果有不对的或不理解的地方，希望大家可以指正和多多交流</p>
+</li>
+</ol>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">艾三元</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://i3yuan.github.io/2019/06/15/asp.net-core-bu-shu-xi-lie-er-fa-bu-dao-centos-shang/">https://i3yuan.github.io/2019/06/15/asp.net-core-bu-shu-xi-lie-er-fa-bu-dao-centos-shang/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">艾三元</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/NetCore/">
+                                    <span class="chip bg-color">.NetCore</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/">
+                                    <span class="chip bg-color">部署环境</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/06/22/gan-huo-fen-xiang-c-shi-ti-lei-sheng-cheng-gong-ju/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="【干货分享】C# 实体类生成工具">
+                        
+                        <span class="card-title">【干货分享】C# 实体类生成工具</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            【干货分享】C# 实体类生成工具前言 项目实战中不论是业务编码还是通用编码，总会归纳出一些通用的工具类。放入项目中一劳永逸，让兄弟姐妹们避免编写重复代码。所以利用了工作之余的时间，将这些散落在多个项目中精致优雅的工具类，归纳起来形成工程，方
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-06-22
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Net-C/" class="post-category">
+                                    .Net/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Net/">
+                        <span class="chip bg-color">.Net</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+                        <span class="chip bg-color">实用工具</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/05/31/wei-xin-gong-zhong-hao-kai-fa-yong-hu-guan-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="微信公众号开发 —— 用户管理">
+                        
+                        <span class="card-title">微信公众号开发 —— 用户管理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            微信公众号开发 —— 用户管理前言 微信公众号提供了用户和用户组的管理,我们可以在微信公众号官方里面进行操作，添加备注和标签,以及移动用户组别，同时,微信公众号提供了相应的接口方便我们调用，可方便的把用户同步到本地,这样我们可以自己为用户定
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-31
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" class="post-category">
+                                    微信开发
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Net/">
+                        <span class="chip bg-color">.Net</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">微信开发</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%85%AC%E4%BC%97%E5%8F%B7/">
+                        <span class="chip bg-color">公众号</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">艾三元</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+           <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>-->
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/i3yuan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

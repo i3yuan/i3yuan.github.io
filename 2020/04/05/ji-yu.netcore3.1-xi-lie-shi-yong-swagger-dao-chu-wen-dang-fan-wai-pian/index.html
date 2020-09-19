@@ -1,0 +1,1265 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer"/>
+    <meta name="keywords" content="基于.NetCore3.1系列 —— 使用Swagger导出文档 (番外篇), 艾三元">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>基于.NetCore3.1系列 —— 使用Swagger导出文档 (番外篇) | 艾三元</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">艾三元</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+      
+      <i class="fas fa-blog" style="zoom: 0.6;"></i>
+      
+      <span>博客</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">艾三元</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-blog"></i>
+			
+			博客
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/i3yuan" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/i3yuan" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">基于.NetCore3.1系列 —— 使用Swagger导出文档 (番外篇)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Swagger%E6%A1%86%E6%9E%B6/">
+                                <span class="chip bg-color">Swagger框架</span>
+                            </a>
+                        
+                            <a href="/tags/net-core/">
+                                <span class="chip bg-color">.net core</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                DotCore/C#
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-04-05
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="基于-NetCore3-1系列-——-使用Swagger导出文档-番外篇"><a href="#基于-NetCore3-1系列-——-使用Swagger导出文档-番外篇" class="headerlink" title="基于.NetCore3.1系列 —— 使用Swagger导出文档 (番外篇)"></a>基于.NetCore3.1系列 —— 使用Swagger导出文档 (番外篇)</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p> 回顾之前的两篇<a target="_blank" rel="noopener" href="https://www.cnblogs.com/i3yuan/p/12542291.html">Swagger做Api接口文档</a>，我们大体上学会了如何在net core3.1的项目基础上，搭建一套自动生产API接口说明文档的框架。</p>
+<p> 本来在Swagger的基础上，前后端开发人员在开发生产期间，可以借此进行更加便捷的沟通交流。可是总有些时候，遇到一些难缠的，又不讲道理，偏偏觉得将Swagger文档地址丢给客户会不够正式！死活要一份word文档。</p>
+<p>​                 <a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202004/1576550-20200405173943699-442289628.gif"><img src="https://img2020.cnblogs.com/blog/1576550/202004/1576550-20200405173943699-442289628.gif" alt="img"></a></p>
+<p> 可是这个时候，如果接口数量上百个，甚至更多，一个一个手动输入word，那将是一笔耗时的工作。但却有什么办法可以解决呢？ </p>
+<p> 对了，利用Swagge生成的Json文件转换为word文档不就可以了吗？</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><ol>
+<li><p>获取Swagger接口文档的Json文件</p>
+</li>
+<li><p>解析Json文件数据填充到Html的表格中</p>
+</li>
+<li><p>根据生成的html转work文档</p>
+</li>
+</ol>
+<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><h2 id="文档模板"><a href="#文档模板" class="headerlink" title="文档模板"></a>文档模板</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>URL</td>
+<td>/api/Movie/AddMovie</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>请求方式</td>
+<td>Post</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>参数名</td>
+<td>参数类型</td>
+<td>是否必填</td>
+<td>说明</td>
+</tr>
+<tr>
+<td>id</td>
+<td>Query</td>
+<td>False</td>
+<td>影视ID</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Query</td>
+<td>False</td>
+<td>电影名称</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Query</td>
+<td>False</td>
+<td>电影类型</td>
+</tr>
+<tr>
+<td>状态码</td>
+<td>说明</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>200</td>
+<td>Success</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>示例</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>请求参数</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>返回值</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="一、根据Swagger版本获取Json数据"><a href="#一、根据Swagger版本获取Json数据" class="headerlink" title="一、根据Swagger版本获取Json数据"></a>一、根据Swagger版本获取Json数据</h2><p>1.通过Swagger源码文件可以看到</p>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202004/1576550-20200404212601040-20298144.png"><img src="https://img2020.cnblogs.com/blog/1576550/202004/1576550-20200404212601040-20298144.png" alt="img"></a></p>
+<p> 可以拿到swagger生成的文档数据，所以我们可以新建一个控制器SwaggerController.cs,</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token keyword">private</span> <span class="token keyword">readonly</span> SwaggerGenerator _swaggerGenerator<span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token function">SwaggerController</span><span class="token punctuation">(</span>SwaggerGenerator swaggerGenerator<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            _swaggerGenerator <span class="token operator">=</span> swaggerGenerator<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 导出文件</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="type">文件类型&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="version">版本号V1&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;returns>&lt;/returns></span>
+        <span class="token punctuation">[</span>HttpGet<span class="token punctuation">]</span>
+        <span class="token keyword">public</span> FileResult <span class="token function">ExportWord</span><span class="token punctuation">(</span><span class="token keyword">string</span> type<span class="token punctuation">,</span><span class="token keyword">string</span> version<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">string</span> contenttype <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span>Empty<span class="token punctuation">;</span>
+
+            <span class="token keyword">var</span> model <span class="token operator">=</span> _swaggerGenerator<span class="token punctuation">.</span><span class="token function">GetSwagger</span><span class="token punctuation">(</span>version<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//1. 根据指定版本获取指定版本的json对象。</span>
+        <span class="token punctuation">}</span></code></pre>
+<ol start="2">
+<li>在Startup.cs文件中，利用net core的ioc容器，注入SwaggerGenerator实例化，这样在后面的调用中可以直接使用这个方法</li>
+</ol>
+<pre class=" language-csharp"><code class="language-csharp">            services<span class="token punctuation">.</span><span class="token generic-method function">AddScoped<span class="token punctuation">&lt;</span>SwaggerGenerator<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//注入SwaggerGenerator,后面可以直接使用这个方法</span></code></pre>
+<h2 id="二、文件数据填充到Html的表格中"><a href="#二、文件数据填充到Html的表格中" class="headerlink" title="二、文件数据填充到Html的表格中"></a>二、文件数据填充到Html的表格中</h2><p>根据上面获取的model文件数据，这个时候，我们利用Razor文件，结合html的table模板，将数据遍历填充到页面中，生成完整的页面</p>
+<p>Html模板</p>
+<pre class=" language-csharp"><code class="language-csharp">@<span class="token keyword">using</span> Swashbuckle<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Swagger<span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">></span>
+<span class="token operator">&lt;</span>html<span class="token operator">></span>
+<span class="token operator">&lt;</span>head<span class="token operator">></span>
+    <span class="token operator">&lt;</span>title<span class="token operator">></span>Swagger API文档代码文件<span class="token operator">&lt;</span><span class="token operator">/</span>title<span class="token operator">></span>
+    <span class="token operator">&lt;</span>style type<span class="token operator">=</span><span class="token string">'text/css'</span><span class="token operator">></span>
+
+        table<span class="token punctuation">,</span> table td<span class="token punctuation">,</span> table th <span class="token punctuation">{</span>
+            border<span class="token punctuation">:</span> 1px solid #<span class="token number">000000</span><span class="token punctuation">;</span>
+            border<span class="token operator">-</span>collapse<span class="token punctuation">:</span> collapse<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        table <span class="token punctuation">{</span>
+            table<span class="token operator">-</span>layout<span class="token punctuation">:</span> <span class="token keyword">fixed</span><span class="token punctuation">;</span>
+            word<span class="token operator">-</span><span class="token keyword">break</span><span class="token punctuation">:</span> <span class="token keyword">break</span><span class="token operator">-</span>all<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        tr <span class="token punctuation">{</span>
+            height<span class="token punctuation">:</span> 20px<span class="token punctuation">;</span>
+            font<span class="token operator">-</span>size<span class="token punctuation">:</span> 12px<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>head<span class="token operator">></span>
+<span class="token operator">&lt;</span>body<span class="token operator">></span>
+    <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token string">'width:1000px; margin: 0 auto'</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>span<span class="token operator">></span><span class="token operator">&lt;</span>i<span class="token operator">></span>Word接口文档<span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span>
+        <span class="token operator">&lt;</span>h1 align<span class="token operator">=</span><span class="token string">"center"</span><span class="token operator">></span>@Model<span class="token punctuation">.</span>Info<span class="token punctuation">.</span>Title<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+        <span class="token operator">&lt;</span>h1 align<span class="token operator">=</span><span class="token string">"center"</span><span class="token operator">></span>接口文档 @Model<span class="token punctuation">.</span>Info<span class="token punctuation">.</span>Version<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+        <span class="token operator">&lt;</span>h4<span class="token operator">></span>联系方式<span class="token operator">&lt;</span><span class="token operator">/</span>h4<span class="token operator">></span>
+        <span class="token operator">&lt;</span>span<span class="token operator">></span>作者：@Model<span class="token punctuation">.</span>Info<span class="token punctuation">.</span>Contact<span class="token punctuation">.</span>Name<span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span>
+        <span class="token operator">&lt;</span>br<span class="token operator">></span>
+        <span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"mailto:@Model.Info.Contact.Email"</span> rel<span class="token operator">=</span><span class="token string">"noopener noreferrer"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"link"</span><span class="token operator">></span>Send email to Xunit<span class="token punctuation">.</span>Core<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span>
+        <span class="token operator">&lt;</span>br<span class="token operator">></span>
+        <span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"@Model.Info.Contact.Url"</span> target<span class="token operator">=</span><span class="token string">"_blank"</span> rel<span class="token operator">=</span><span class="token string">"noopener noreferrer"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"link"</span><span class="token operator">></span>@Model<span class="token punctuation">.</span>Info<span class="token punctuation">.</span>Contact<span class="token punctuation">.</span>Name <span class="token operator">-</span> Website<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span>
+        <span class="token operator">&lt;</span>br<span class="token operator">></span>
+        <span class="token operator">&lt;</span>h3<span class="token operator">></span>接口描述<span class="token operator">&lt;</span><span class="token operator">/</span>h3<span class="token operator">></span>
+        <span class="token operator">&lt;</span>span<span class="token operator">></span>@Model<span class="token punctuation">.</span>Info<span class="token punctuation">.</span>Description<span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span>
+        <span class="token operator">&lt;</span>br<span class="token operator">></span>
+        <span class="token operator">&lt;</span>table border<span class="token operator">=</span><span class="token string">'1'</span> cellspacing<span class="token operator">=</span><span class="token string">'0'</span> cellpadding<span class="token operator">=</span><span class="token string">'0'</span> style<span class="token operator">=</span><span class="token string">"table-layout: fixed; word-break: break-all;border: 1px solid #000000;border-collapse: collapse;"</span> width<span class="token operator">=</span><span class="token string">'100%'</span><span class="token operator">></span>
+            <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                <span class="token operator">&lt;</span>td align<span class="token operator">=</span><span class="token string">"center"</span> style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span><span class="token operator">></span>说明<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                <span class="token operator">&lt;</span>td<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+            <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                <span class="token operator">&lt;</span>td align<span class="token operator">=</span><span class="token string">"center"</span> style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span><span class="token operator">></span>类型<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                <span class="token operator">&lt;</span>td<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+
+        <span class="token operator">&lt;</span><span class="token operator">/</span>table<span class="token operator">></span>
+        @<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> item <span class="token keyword">in</span> Model<span class="token punctuation">.</span>Paths<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>item<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Operations <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> operation <span class="token keyword">in</span> item<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Operations<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token operator">&lt;</span>h3<span class="token operator">></span>@operation<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Summary<span class="token operator">&lt;</span><span class="token operator">/</span>h3<span class="token operator">></span>
+                    <span class="token operator">&lt;</span>table border<span class="token operator">=</span><span class="token string">'1'</span> cellspacing<span class="token operator">=</span><span class="token string">'0'</span> cellpadding<span class="token operator">=</span><span class="token string">'0'</span> width<span class="token operator">=</span><span class="token string">'100%'</span> style<span class="token operator">=</span><span class="token string">"table-layout: fixed; word-break: break-all;border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                        <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span> align<span class="token operator">=</span><span class="token string">"center"</span><span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td colspan<span class="token operator">=</span><span class="token string">'5'</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+
+                        <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>URL<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td colspan<span class="token operator">=</span><span class="token string">'4'</span><span class="token operator">></span>@item<span class="token punctuation">.</span>Key<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+                        <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>请求方式<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td colspan<span class="token operator">=</span><span class="token string">'4'</span><span class="token operator">></span>
+                                @operation<span class="token punctuation">.</span>Key
+                            <span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+
+                        @<span class="token keyword">if</span> <span class="token punctuation">(</span>operation<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Parameters <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> operation<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Parameters<span class="token punctuation">.</span>Count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>
+                            <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span> align<span class="token operator">=</span><span class="token string">'center'</span><span class="token operator">></span>
+                                <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>参数名<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>参数类型<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>是否必填<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span> colspan<span class="token operator">=</span><span class="token string">'2'</span><span class="token operator">></span>说明<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                            <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+                            @<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> param <span class="token keyword">in</span> operation<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Parameters<span class="token punctuation">)</span>
+                            <span class="token punctuation">{</span>
+                                <span class="token operator">&lt;</span>tr align<span class="token operator">=</span><span class="token string">'center'</span> style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                                    <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>@param<span class="token punctuation">.</span>Name<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                    <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>@param<span class="token punctuation">.</span>In<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                    <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>@param<span class="token punctuation">.</span>Required<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                    <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span> colspan<span class="token operator">=</span><span class="token string">'2'</span><span class="token operator">></span>@param<span class="token punctuation">.</span>Description<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">}</span>
+
+                        <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span> align<span class="token operator">=</span><span class="token string">'center'</span><span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>状态码<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span> colspan<span class="token operator">=</span><span class="token string">'4'</span><span class="token operator">></span>说明<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+                        @<span class="token keyword">if</span> <span class="token punctuation">(</span>operation<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Responses <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> operation<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Responses<span class="token punctuation">.</span>Count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>
+                            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">var</span> response <span class="token keyword">in</span> operation<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Responses<span class="token punctuation">)</span>
+                            <span class="token punctuation">{</span>
+                                <span class="token operator">&lt;</span>tr align<span class="token operator">=</span><span class="token string">'center'</span> style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                                    <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>@response<span class="token punctuation">.</span>Key<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                    <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span> colspan<span class="token operator">=</span><span class="token string">'4'</span><span class="token operator">></span>@response<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>Description<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                                <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">}</span>
+                        <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span><span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span> colspan<span class="token operator">=</span><span class="token string">'5'</span><span class="token operator">></span>示例<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+                        <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"height: 40px;"</span> style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span><span class="token operator">></span>请求参数<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span> colspan<span class="token operator">=</span><span class="token string">'4'</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+                        <span class="token operator">&lt;</span>tr style<span class="token operator">=</span><span class="token string">"height: 40px;"</span> style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span><span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"background-color: rgb(84, 127, 177);"</span><span class="token operator">></span>返回值<span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                            <span class="token operator">&lt;</span>td style<span class="token operator">=</span><span class="token string">"border: 1px solid #000000;border-collapse: collapse;"</span> colspan<span class="token operator">=</span><span class="token string">'4'</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>td<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>tr<span class="token operator">></span>
+                    <span class="token operator">&lt;</span><span class="token operator">/</span>table<span class="token operator">></span>
+                    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+                <span class="token punctuation">}</span>
+
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>body<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>html<span class="token operator">></span></code></pre>
+<p>将数据遍历到静态页面中，</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 将数据遍历静态页面中</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="templatePath">静态页面地址&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="model">获取到的文件数据&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;returns>&lt;/returns></span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> <span class="token function">GeneritorSwaggerHtml</span><span class="token punctuation">(</span><span class="token keyword">string</span> templatePath<span class="token punctuation">,</span> OpenApiDocument model<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> template <span class="token operator">=</span> System<span class="token punctuation">.</span>IO<span class="token punctuation">.</span>File<span class="token punctuation">.</span><span class="token function">ReadAllText</span><span class="token punctuation">(</span>templatePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> result <span class="token operator">=</span> Engine<span class="token punctuation">.</span>Razor<span class="token punctuation">.</span><span class="token function">RunCompile</span><span class="token punctuation">(</span>template<span class="token punctuation">,</span> <span class="token string">"i3yuan"</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span>OpenApiDocument<span class="token punctuation">)</span><span class="token punctuation">,</span> model<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<h2 id="三、根据生成的html转work文档"><a href="#三、根据生成的html转work文档" class="headerlink" title="三、根据生成的html转work文档"></a>三、根据生成的html转work文档</h2><pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 静态页面转文件</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="html">静态页面html&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="type">文件类型&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="contenttype">上下文类型&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;returns>&lt;/returns></span>
+        <span class="token keyword">public</span> Stream <span class="token function">SwaggerConversHtml</span><span class="token punctuation">(</span><span class="token keyword">string</span> html<span class="token punctuation">,</span> <span class="token keyword">string</span> type<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token keyword">string</span> contenttype<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">string</span> fileName <span class="token operator">=</span> Guid<span class="token punctuation">.</span><span class="token function">NewGuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> type<span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//文件存放路径</span>
+            <span class="token keyword">string</span> webRootPath <span class="token operator">=</span> _hostingEnvironment<span class="token punctuation">.</span>WebRootPath<span class="token punctuation">;</span>
+            <span class="token keyword">string</span> path <span class="token operator">=</span> webRootPath <span class="token operator">+</span> <span class="token string">@"\Files\TempFiles\";
+            var addrUrl = path + $"</span><span class="token punctuation">{</span>fileName<span class="token punctuation">}</span>"<span class="token punctuation">;</span>
+            FileStream fileStream <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> provider <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileExtensionContentTypeProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            contenttype <span class="token operator">=</span> provider<span class="token punctuation">.</span>Mappings<span class="token punctuation">[</span>type<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">try</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Directory<span class="token punctuation">.</span><span class="token function">Exists</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    Directory<span class="token punctuation">.</span><span class="token function">CreateDirectory</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">var</span> data <span class="token operator">=</span> Encoding<span class="token punctuation">.</span>Default<span class="token punctuation">.</span><span class="token function">GetBytes</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">var</span> stream <span class="token operator">=</span> ByteHelper<span class="token punctuation">.</span><span class="token function">BytesToStream</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//创建Document实例</span>
+                Document document <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Document</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//加载HTML文档</span>
+                document<span class="token punctuation">.</span><span class="token function">LoadFromStream</span><span class="token punctuation">(</span>stream<span class="token punctuation">,</span> FileFormat<span class="token punctuation">.</span>Html<span class="token punctuation">,</span> XHTMLValidationType<span class="token punctuation">.</span>None<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//保存为Word</span>
+                document<span class="token punctuation">.</span><span class="token function">SaveToFile</span><span class="token punctuation">(</span>addrUrl<span class="token punctuation">,</span> FileFormat<span class="token punctuation">.</span>Docx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                document<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                fileStream <span class="token operator">=</span> File<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span>addrUrl<span class="token punctuation">,</span> FileMode<span class="token punctuation">.</span>OpenOrCreate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">var</span> filedata <span class="token operator">=</span> ByteHelper<span class="token punctuation">.</span><span class="token function">StreamToBytes</span><span class="token punctuation">(</span>fileStream<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">var</span> outdata <span class="token operator">=</span> ByteHelper<span class="token punctuation">.</span><span class="token function">BytesToStream</span><span class="token punctuation">(</span>filedata<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">return</span> outdata<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">finally</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>fileStream <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+                    fileStream<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>File<span class="token punctuation">.</span><span class="token function">Exists</span><span class="token punctuation">(</span>addrUrl<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    File<span class="token punctuation">.</span><span class="token function">Delete</span><span class="token punctuation">(</span>addrUrl<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//删掉文件</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span></code></pre>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ByteHelper</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">StreamToBytes</span><span class="token punctuation">(</span>Stream stream<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">byte</span><span class="token punctuation">[</span>stream<span class="token punctuation">.</span>Length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            stream<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>bytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> bytes<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 设置当前流的位置为流的开始 </span>
+            stream<span class="token punctuation">.</span><span class="token function">Seek</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> SeekOrigin<span class="token punctuation">.</span>Begin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> bytes<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/// 将 byte[] 转成 Stream</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> Stream <span class="token function">BytesToStream</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Stream stream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MemoryStream</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> stream<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<h2 id="四、最终效果"><a href="#四、最终效果" class="headerlink" title="四、最终效果"></a>四、最终效果</h2><p>将html转换为word后，我们就可以看到带有 .doc 的效果了！差不多是如下效果</p>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202004/1576550-20200404220404745-683697970.png"><img src="https://img2020.cnblogs.com/blog/1576550/202004/1576550-20200404220404745-683697970.png" alt="img"></a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li><p>到这基本就结束了，通过简易的几个接口的方式，展示了如何通过将Swagger接口文档生成word文档。可以根据自己的html模板生成各式的word样式文档说明。</p>
+</li>
+<li><p>写这篇番外主要是因为之前介绍了关于如何使用Swagger生成在线文档，但实际工作中，可能也会遇到这种要各种正式word文档的客户，所以在此分享一些想法和思路，同时希望大家不吝指教。</p>
+</li>
+<li><p>后续还会不断修改和完善，可以更多的生成不同的文件类型和按需生成不同版本的接口文档，持续更新。。。</p>
+</li>
+<li><p>注：搜索关注公众号【DotNet技术谷】–回复【文档生成器】，可获取本篇Swagger转换work文件</p>
+</li>
+<li><p>参考资料：<a target="_blank" rel="noopener" href="https://www.e-iceblue.cn/spiredoc/spire-doc-for-net-program-guide-content.html">Spire.Doc</a>文件 、<a target="_blank" rel="noopener" href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore">Swagger开源地址</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://files-cdn.cnblogs.com/files/i3yuan/XUnit.Core%E7%95%AA%E5%A4%96%E7%AF%87.rar">源码下载</a></p>
+</li>
+</ol>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">艾三元</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://i3yuan.github.io/2020/04/05/ji-yu.netcore3.1-xi-lie-shi-yong-swagger-dao-chu-wen-dang-fan-wai-pian/">https://i3yuan.github.io/2020/04/05/ji-yu.netcore3.1-xi-lie-shi-yong-swagger-dao-chu-wen-dang-fan-wai-pian/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">艾三元</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Swagger%E6%A1%86%E6%9E%B6/">
+                                    <span class="chip bg-color">Swagger框架</span>
+                                </a>
+                            
+                                <a href="/tags/net-core/">
+                                    <span class="chip bg-color">.net core</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/04/12/ji-yu.netcore3.1-xi-lie-shi-yong-swagger-dao-chu-wen-dang-bu-chong-pian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/41.jpg" class="responsive-img" alt="基于.NetCore3.1系列 —— 使用Swagger导出文档 (补充篇)">
+                        
+                        <span class="card-title">基于.NetCore3.1系列 —— 使用Swagger导出文档 (补充篇)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于.NetCore3.1系列 —— 使用Swagger导出文档 (补充篇)前言 在上一篇导出文档番外篇中，我们已经熟悉了怎样根据json数据导出word的文档，生成接口文档，而在这一篇，将对上一篇进行完善补充，增加多种导出方式，实现更加完
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-12
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Swagger%E6%A1%86%E6%9E%B6/">
+                        <span class="chip bg-color">Swagger框架</span>
+                    </a>
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/03/23/ji-yu.netcore3.1-xi-lie-shi-yong-swagger-zuo-api-wen-dang-xia-pian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/42.jpg" class="responsive-img" alt="基于.NetCore3.1系列 —— 使用Swagger做Api文档 (下篇)">
+                        
+                        <span class="card-title">基于.NetCore3.1系列 —— 使用Swagger做Api文档 (下篇)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于.NetCore3.1系列 —— 使用Swagger做Api文档 (下篇)前言​     
+ 回顾上一篇文章《使用Swagger做Api文档 》，文中介绍了在.net core 3.1中，利用Swagger轻量级框架，如何引入程序包，配
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Swagger%E6%A1%86%E6%9E%B6/">
+                        <span class="chip bg-color">Swagger框架</span>
+                    </a>
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">艾三元</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+           <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>-->
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/i3yuan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

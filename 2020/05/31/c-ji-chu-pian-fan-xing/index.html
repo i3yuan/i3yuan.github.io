@@ -1,0 +1,1598 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer"/>
+    <meta name="keywords" content="C#基础篇——泛型, 艾三元">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>C#基础篇——泛型 | 艾三元</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">艾三元</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+      
+      <i class="fas fa-blog" style="zoom: 0.6;"></i>
+      
+      <span>博客</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">艾三元</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-blog"></i>
+			
+			博客
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/i3yuan" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/i3yuan" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">C#基础篇——泛型</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/C-%E5%9F%BA%E7%A1%80%E7%AF%87/">
+                                <span class="chip bg-color">C#基础篇</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Net-C/" class="post-category">
+                                .Net/C#
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-05-31
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="C-基础篇——泛型"><a href="#C-基础篇——泛型" class="headerlink" title="C#基础篇——泛型"></a>C#基础篇——泛型</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在开发编程中，我们经常会遇到功能非常相似的功能模块，只是他们的处理的数据不一样，所以我们会分别采用多个方法来处理不同的数据类型。但是这个时候，我们就会想一个问题，有没有办法实现利用同一个方法来传递不同种类型的参数呢？</p>
+<p>这个时候，泛型也就因运而生，专门来解决这个问题的。</p>
+<p>泛型是在C#2.0就推出的一个新语法，由框架升级提供的功能。</p>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>泛型通过参数化类型实现在同一份代码上操作多种数据类型。例如使用泛型的类型参数T,定义一个类Stack，</p>
+<p>可以用Stack、Stack或者Stack实例化它，从而使类Stack可以处理int、string、Person类型数据。这样可以避免运行时类型转换或封箱操作的代价和风险。泛型提醒的是将具体的东西模糊化。</p>
+<p>同时使用泛型类型可以最大限度地重用代码、保护类型安全以及提高性能。</p>
+<p>可以创建：<strong>泛型接口</strong>、<strong>泛型类</strong>、<strong>泛型方法</strong>、<strong>泛型事件</strong>和<strong>泛型委托</strong></p>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2><p>泛型类封装不特定于特定数据类型的操作。 泛型类最常见用法是用于链接列表、哈希表、堆栈、队列和树等集合。 无论存储数据的类型如何，添加项和从集合删除项等操作的执行方式基本相同。</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">// T是int类型</span>
+        GenericClass<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> genericInt <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericClass</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        genericInt<span class="token punctuation">.</span>_T <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// T是string类型</span>
+        GenericClass<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> genericString <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericClass</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        genericString<span class="token punctuation">.</span>_T <span class="token operator">=</span> <span class="token string">"123"</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span></code></pre>
+<p>新建一个GenericClass类</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token comment" spellcheck="true">/// &lt;summary></span>
+    <span class="token comment" spellcheck="true">/// 泛型类</span>
+    <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+    <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GenericClass</span><span class="token operator">&lt;</span>T<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> T _T<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<h2 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h2><p>泛型方法是通过类型参数声明的方法, 解决用一个方法，满足不同参数类型</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> 泛型方法</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"************Generic**************"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> iValue <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">string</span> sValue <span class="token operator">=</span> <span class="token string">"456"</span><span class="token punctuation">;</span>
+        DateTime dtValue <span class="token operator">=</span> DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">;</span>
+        <span class="token keyword">object</span> oValue <span class="token operator">=</span> <span class="token string">"MrValue"</span><span class="token punctuation">;</span>
+        GenericMethod<span class="token punctuation">.</span><span class="token generic-method function">Show<span class="token punctuation">&lt;</span><span class="token keyword">int</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>iValue<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//需要指定类型参数</span>
+        <span class="token comment" spellcheck="true">//GenericMethod.Show&lt;string>(iValue);//必须吻合</span>
+        GenericMethod<span class="token punctuation">.</span><span class="token function">Show</span><span class="token punctuation">(</span>iValue<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//能省略，自动推算</span>
+        GenericMethod<span class="token punctuation">.</span><span class="token generic-method function">Show<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>sValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        GenericMethod<span class="token punctuation">.</span><span class="token generic-method function">Show<span class="token punctuation">&lt;</span>DateTime<span class="token punctuation">></span></span><span class="token punctuation">(</span>dtValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        GenericMethod<span class="token punctuation">.</span><span class="token generic-method function">Show<span class="token punctuation">&lt;</span><span class="token keyword">object</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>oValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+    <span class="token punctuation">}</span></code></pre>
+<p>新建一个GenericMethod</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token comment" spellcheck="true">/// &lt;summary></span>
+<span class="token comment" spellcheck="true">/// 泛型方法</span>
+<span class="token comment" spellcheck="true">/// &lt;/summary></span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GenericMethod</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/// &lt;summary></span>
+    <span class="token comment" spellcheck="true">/// 2.0推出的新语法</span>
+    <span class="token comment" spellcheck="true">/// 泛型方法解决用一个方法，满足不同参数类型；做相同的事儿</span>
+    <span class="token comment" spellcheck="true">/// 没有写死参数类型，调用的时候才指定的类型</span>
+    <span class="token comment" spellcheck="true">/// 延迟声明：把参数类型的声明推迟到调用</span>
+    <span class="token comment" spellcheck="true">/// 推迟一切可以推迟的~~  延迟思想</span>
+    <span class="token comment" spellcheck="true">/// 不是语法糖，而是2.0由框架升级提供的功能</span>
+    <span class="token comment" spellcheck="true">/// 需要编译器支持+JIT支持</span>
+    <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+    <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">T/S 不要用关键字  也不要跟别的类型冲突 &lt;/typeparam></span>
+    <span class="token comment" spellcheck="true">/// &lt;param name="tParameter">&lt;/param></span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token generic-method function">Show<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T tParameter<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"This is {0},parameter={1},type={2}"</span><span class="token punctuation">,</span>
+            <span class="token keyword">typeof</span><span class="token punctuation">(</span>GenericMethod<span class="token punctuation">)</span><span class="token punctuation">,</span> tParameter<span class="token punctuation">.</span><span class="token function">GetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Name<span class="token punctuation">,</span> tParameter<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p>为泛型集合类或表示集合中的项的泛型类定义接口通常很有用处。在c#中，通过尖括号“&lt;&gt;”将类型参数括起来，表示泛型。声明泛型接口时，与声明一般接口的唯一区别是增加了一个。一般来说，声明泛型接口与声明非泛型接口遵循相同的规则。</p>
+<p>泛型接口定义完成之后，就要定义此接口的子类。定义泛型接口的子类有以下两种方法。</p>
+<p>(1)直接在子类后声明泛型。</p>
+<p>(2)在子类实现的接口中明确的给出泛型类型。</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> 泛型接口</span>
+        CommonInterface commonInterface <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CommonInterface</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        commonInterface<span class="token punctuation">.</span><span class="token function">GetT</span><span class="token punctuation">(</span><span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+    <span class="token punctuation">}</span></code></pre>
+<p>新建GenericInterface.cs类文件</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 泛型类</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GenericClass</span><span class="token operator">&lt;</span>T<span class="token operator">></span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">public</span> T _T<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 泛型接口</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IGenericInterface</span><span class="token operator">&lt;</span>T<span class="token operator">></span>
+        <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//泛型类型的返回值</span>
+            T <span class="token function">GetT</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 使用泛型的时候必须指定具体类型，</span>
+        <span class="token comment" spellcheck="true">/// 这里的具体类型是int</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CommonClass</span> <span class="token punctuation">:</span> GenericClass<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span>
+        <span class="token punctuation">{</span>
+
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 必须指定具体类型</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CommonInterface</span> <span class="token punctuation">:</span> IGenericInterface<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">public</span> <span class="token keyword">string</span> <span class="token function">GetT</span><span class="token punctuation">(</span><span class="token keyword">string</span> t<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> t<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 子类也是泛型的，继承的时候可以不指定具体类型</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CommonClassChild</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">:</span> GenericClass<span class="token operator">&lt;</span>T<span class="token operator">></span>
+        <span class="token punctuation">{</span>
+
+        <span class="token punctuation">}</span></code></pre>
+<h2 id="泛型委托"><a href="#泛型委托" class="headerlink" title="泛型委托"></a>泛型委托</h2><p>泛型委托主要是想讲一下Action和Func两个委托，因为这两个在Linq中是经常见到的。</p>
+<p>Action只能委托必须是无返回值的方法</p>
+<p>Fun只是委托必须有返回值的方法</p>
+<p>不管是不是泛型委托，只要是委托委托那能用Lamdba表达式，因为不管Lamdba表达式还是匿名函数其实都是将函数变量化。</p>
+<p>下面简单的来做的demo说下两个的用法,这个会了基本linq会了一半了。</p>
+<pre class=" language-C#"><code class="language-C#">    static void Main(string[] args)
+    {
+        #region 泛型委托
+        Action<string> action = s => {
+            Console.WriteLine(s);
+        };
+        action("i3yuan");
+        Func<int, int, int> func = (int a, int b) => {
+            return a + b;
+        };
+        Console.WriteLine("sum:{0}", func(1,1));
+        Console.ReadLine();
+        #endregion
+    }</code></pre>
+<p>上面其实都是将函数做为变量，这也是委托的思想。action是实例化了一个只有一个字符串参数没有返回值得函数变量。func是实例化了一个有两个int类型的参数返回值为int的函数变量。</p>
+<p>可以看到通过Lamdba表达式和泛型的结合，算是又方便了开发者们，更加方便实用。</p>
+<blockquote>
+<h2 id="引入委托常用的另一方式"><a href="#引入委托常用的另一方式" class="headerlink" title="引入委托常用的另一方式"></a>引入委托常用的另一方式</h2></blockquote>
+<p>无论是在类定义内还是类定义外，委托可以定义自己的类型参数。引用泛型委托的代码可以指定类型参数来创建一个封闭构造类型，这和实例化泛型类或调用泛型方法一样，如下例所示：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">delegate</span> <span class="token keyword">void</span> <span class="token generic-method function">MyDelegate<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Notify</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//...</span>
+
+MyDelegate<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> m <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyDelegate</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span>Notify<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+C#<span class="token number">2.0</span>版有个新特性称为方法组转换（method <span class="token keyword">group</span> conversion），具体代理和泛型代理类型都可以使用。用方法组转换可以把上面一行写做简化语法：
+MyDelegate<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> m <span class="token operator">=</span> Notify<span class="token punctuation">;</span>
+
+在泛型类中定义的委托，可以与类的方法一样地使用泛型类的类型参数。
+<span class="token keyword">class</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span>T<span class="token operator">></span>
+<span class="token punctuation">{</span>
+T<span class="token punctuation">[</span><span class="token punctuation">]</span> items<span class="token punctuation">;</span>
+      <span class="token keyword">int</span> index
+<span class="token comment" spellcheck="true">//...</span>
+<span class="token keyword">public</span> <span class="token keyword">delegate</span> <span class="token keyword">void</span> <span class="token function">StackDelegate</span><span class="token punctuation">(</span>T<span class="token punctuation">[</span><span class="token punctuation">]</span> items<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+引用委托的代码必须要指定所在类的类型参数，如下：
+
+Stack<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span> s <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Stack<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">.</span>StackDelegate myDelegate <span class="token operator">=</span> StackNotify<span class="token punctuation">;</span>
+
+
+泛型委托在定义基于典型设计模式的事件时特别有用。因为sender<span class="token punctuation">[</span>JX2<span class="token punctuation">]</span> ，而再也不用与Object相互转换。
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token generic-method function">StackEventHandler<span class="token punctuation">&lt;</span>T<span class="token punctuation">,</span>U<span class="token punctuation">></span></span><span class="token punctuation">(</span>T sender<span class="token punctuation">,</span> U eventArgs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span>T<span class="token operator">></span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//…</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StackEventArgs</span> <span class="token punctuation">:</span> EventArgs<span class="token punctuation">{</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">event</span> StackEventHandler<span class="token operator">&lt;</span>Stack<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">,</span> StackEventArgs<span class="token operator">></span> stackEvent<span class="token punctuation">;</span>
+    <span class="token keyword">protected</span> <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">OnStackChanged</span><span class="token punctuation">(</span>StackEventArgs a<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token function">stackEvent</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">MyClass</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token generic-method function">HandleStackChange<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>Stack<span class="token operator">&lt;</span>T<span class="token operator">></span> stack<span class="token punctuation">,</span> StackEventArgs args<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+Stack<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> s <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+MyClass mc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+s<span class="token punctuation">.</span>StackEventHandler <span class="token operator">+</span><span class="token operator">=</span> mc<span class="token punctuation">.</span>HandleStackChange<span class="token punctuation">;</span></code></pre>
+<h2 id="泛型约束"><a href="#泛型约束" class="headerlink" title="泛型约束"></a>泛型约束</h2><p>所谓的泛型约束，实际上就是约束的类型T。使T必须遵循一定的规则。比如T必须继承自某个类，或者T必须实现某个接口等等。那么怎么给泛型指定约束？其实也很简单，只需要where关键字，加上约束的条件。</p>
+<p>定义一个People类，里面有属性和方法：</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ISports</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">void</span> <span class="token function">Pingpang</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IWork</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">void</span> <span class="token function">Work</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">People</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">int</span> Id <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">string</span> Name <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Hi</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Chinese</span> <span class="token punctuation">:</span> People<span class="token punctuation">,</span> ISports<span class="token punctuation">,</span> IWork
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Tradition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"仁义礼智信，温良恭俭让"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">SayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"吃了么？"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Pingpang</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"打乒乓球..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Work</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NotImplementedException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> 
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Hubei</span> <span class="token punctuation">:</span> Chinese
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token function">Hubei</span><span class="token punctuation">(</span><span class="token keyword">int</span> version<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">string</span> Changjiang <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Majiang</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"打麻将啦。。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Japanese</span> <span class="token punctuation">:</span> ISports
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">int</span> Id <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">string</span> Name <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Hi</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Pingpang</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"打乒乓球..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>打印方法</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token comment" spellcheck="true">/// &lt;summary></span>
+    <span class="token comment" spellcheck="true">/// 打印个object值</span>
+    <span class="token comment" spellcheck="true">/// 1 object类型是一切类型的父类</span>
+    <span class="token comment" spellcheck="true">/// 2 通过继承，子类拥有父类的一切属性和行为；任何父类出现的地方，都可以用子类来代替</span>
+    <span class="token comment" spellcheck="true">/// object引用类型  加入传个值类型int  会有装箱拆箱  性能损失</span>
+    <span class="token comment" spellcheck="true">/// 类型不安全</span>
+    <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+    <span class="token comment" spellcheck="true">/// &lt;param name="oParameter">&lt;/param></span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">ShowObject</span><span class="token punctuation">(</span><span class="token keyword">object</span> oParameter<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"This is {0},parameter={1},type={2}"</span><span class="token punctuation">,</span>
+            <span class="token keyword">typeof</span><span class="token punctuation">(</span>Constraint<span class="token punctuation">)</span><span class="token punctuation">,</span> oParameter<span class="token punctuation">.</span><span class="token function">GetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Name<span class="token punctuation">,</span> oParameter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>$<span class="token string">"{((People)oParameter).Id}_{((People)oParameter).Name}"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span></code></pre>
+<p>在main方法中</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span>  Constraint 接口约束</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"************Constraint*****************"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">{</span>
+            People people <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">People</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                Id <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">,</span>
+                Name <span class="token operator">=</span> <span class="token string">"走自己的路"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">;</span>
+            Chinese chinese <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Chinese</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                Id <span class="token operator">=</span> <span class="token number">234</span><span class="token punctuation">,</span>
+                Name <span class="token operator">=</span> <span class="token string">"晴天"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">;</span>
+            Hubei hubei <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Hubei</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                Id <span class="token operator">=</span> <span class="token number">345</span><span class="token punctuation">,</span>
+                Name <span class="token operator">=</span> <span class="token string">"流年"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">;</span>
+            Japanese japanese <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Japanese</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                Id <span class="token operator">=</span> <span class="token number">7654</span><span class="token punctuation">,</span>
+                Name <span class="token operator">=</span> <span class="token string">"i3yuan"</span><span class="token comment" spellcheck="true">//</span>
+            <span class="token punctuation">}</span><span class="token punctuation">;</span>
+            CommonMethod<span class="token punctuation">.</span><span class="token function">ShowObject</span><span class="token punctuation">(</span>people<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            CommonMethod<span class="token punctuation">.</span><span class="token function">ShowObject</span><span class="token punctuation">(</span>chinese<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            CommonMethod<span class="token punctuation">.</span><span class="token function">ShowObject</span><span class="token punctuation">(</span>hubei<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            CommonMethod<span class="token punctuation">.</span><span class="token function">ShowObject</span><span class="token punctuation">(</span>japanese<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            Console<span class="token punctuation">.</span><span class="token function">ReadLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+    <span class="token punctuation">}</span></code></pre>
+<p>泛型约束总共有五种。</p>
+<table>
+<thead>
+<tr>
+<th>约束</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T：结构</td>
+<td>类型参数必须是值类型</td>
+</tr>
+<tr>
+<td>T：类</td>
+<td>类型参数必须是引用类型；这一点也适用于任何类、接口、委托或数组类型。</td>
+</tr>
+<tr>
+<td>T：new()</td>
+<td>类型参数必须具有无参数的公共构造函数。 当与其他约束一起使用时，new() 约束必须最后指定。</td>
+</tr>
+<tr>
+<td>T：&lt;基类名&gt;</td>
+<td>类型参数必须是指定的基类或派生自指定的基类。</td>
+</tr>
+<tr>
+<td>T：&lt;接口名称&gt;</td>
+<td>类型参数必须是指定的接口或实现指定的接口。 可以指定多个接口约束。 约束接口也可以是泛型的。</td>
+</tr>
+</tbody></table>
+<p>1、基类约束</p>
+<p>上面打印的方法约束T类型必须是People类型。<br>      基类约束：</p>
+<p>约束T必须是People类型或者是People的子类</p>
+<ol>
+<li>可以使用基类的一切属性方法—权利</li>
+<li>强制保证T一定是People或者People的子类—义务</li>
+</ol>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// </span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="tParameter">&lt;/param></span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token generic-method function">Show<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T tParameter<span class="token punctuation">)</span> <span class="token keyword">where</span> T <span class="token punctuation">:</span> People
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>$<span class="token string">"{tParameter.Id}_{tParameter.Name}"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            tParameter<span class="token punctuation">.</span><span class="token function">Hi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p>注意：</p>
+<p>基类约束时，基类不能是密封类，即不能是sealed类。sealed类表示该类不能被继承，在这里用作约束就无任何意义，因为sealed类没有子类。</p>
+<p>2、接口约束</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">/// 接口约束</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="t">&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;returns>&lt;/returns></span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> T <span class="token generic-method function">Get<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span> <span class="token keyword">where</span> T <span class="token punctuation">:</span> ISports
+        <span class="token punctuation">{</span>
+            t<span class="token punctuation">.</span><span class="token function">Pingpang</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> t<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p>3、引用类型约束 class</p>
+<p>引用类型约束保证T一定是引用类型的。</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// 引用类型约束</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="t">&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;returns>&lt;/returns></span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> T <span class="token generic-method function">Get<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span> <span class="token keyword">where</span> T <span class="token punctuation">:</span> <span class="token keyword">class</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> t<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p>4、值类型约束 struct</p>
+<p>值类型约束保证T一定是值类型的。</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// 值类型类型约束</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="t">&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;returns>&lt;/returns></span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> T <span class="token generic-method function">Get<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span> <span class="token keyword">where</span> T <span class="token punctuation">:</span> <span class="token keyword">struct</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> t<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p>5、无参数构造函数约束 new()</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// new()约束</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="t">&lt;/param></span>
+        <span class="token comment" spellcheck="true">/// &lt;returns>&lt;/returns></span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> T <span class="token generic-method function">Get<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span> <span class="token keyword">where</span> T <span class="token punctuation">:</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> t<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p>泛型约束也可以同时约束多个，例如：</p>
+<pre class=" language-csharp"><code class="language-csharp">        <span class="token comment" spellcheck="true">/// &lt;summary></span>
+        <span class="token comment" spellcheck="true">///  泛型：不同的参数类型都能进来；任何类型都能过来，你知道我是谁?</span>
+        <span class="token comment" spellcheck="true">/// 没有约束，也就没有自由</span>
+        <span class="token comment" spellcheck="true">///  泛型约束--基类约束（不能是sealed）：</span>
+        <span class="token comment" spellcheck="true">/// 1 可以使用基类的一切属性方法---权利</span>
+        <span class="token comment" spellcheck="true">/// 2  强制保证T一定是People或者People的子类---义务</span>
+        <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+        <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+        <span class="token comment" spellcheck="true">/// &lt;param name="tParameter">&lt;/param></span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token generic-method function">Show<span class="token punctuation">&lt;</span>T<span class="token punctuation">></span></span><span class="token punctuation">(</span>T tParameter<span class="token punctuation">)</span>
+        <span class="token keyword">where</span> T <span class="token punctuation">:</span> People<span class="token punctuation">,</span> ISports<span class="token punctuation">,</span> IWork<span class="token punctuation">,</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>$<span class="token string">"{tParameter.Id}_{tParameter.Name}"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            tParameter<span class="token punctuation">.</span><span class="token function">Hi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            tParameter<span class="token punctuation">.</span><span class="token function">Pingpang</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            tParameter<span class="token punctuation">.</span><span class="token function">Work</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p>注意：有多个泛型约束时，new()约束一定是在最后。</p>
+<h2 id="泛型的协变和逆变"><a href="#泛型的协变和逆变" class="headerlink" title="泛型的协变和逆变"></a>泛型的协变和逆变</h2><pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Animal</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">int</span> Id <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Cat</span> <span class="token punctuation">:</span> Animal
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">string</span> Name <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+ <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+    <span class="token preprocessor property">#<span class="token directive keyword">region</span> 协变和逆变</span>
+
+    <span class="token comment" spellcheck="true">// 直接声明Animal类</span>
+    Animal animal <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Animal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 直接声明Cat类</span>
+    Cat cat <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 声明子类对象指向父类</span>
+    Animal animal2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 声明Animal类的集合</span>
+    List<span class="token operator">&lt;</span>Animal<span class="token operator">></span> listAnimal <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>Animal<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 声明Cat类的集合</span>
+    List<span class="token operator">&lt;</span>Cat<span class="token operator">></span> listCat <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+ <span class="token punctuation">}</span></code></pre>
+<p>那么问题来了：下面的一句代码是不是正确的呢？</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token number">1</span> List<span class="token operator">&lt;</span>Animal<span class="token operator">></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>可能有人会认为是正确的：因为一只Cat属于Animal，那么一群Cat也应该属于Animal啊。但是实际上这样声明是错误的：因为List和List之间没有父子关系。</p>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202005/1576550-20200531140020139-435436594.png"><img src="https://img2020.cnblogs.com/blog/1576550/202005/1576550-20200531140020139-435436594.png" alt="image-2020053023015097"></a></p>
+<p>这时就可以用到协变和逆变了。</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token number">1</span> <span class="token comment" spellcheck="true">// 协变</span>
+<span class="token number">2</span> IEnumerable<span class="token operator">&lt;</span>Animal<span class="token operator">></span> List1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>Animal<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token number">3</span> IEnumerable<span class="token operator">&lt;</span>Animal<span class="token operator">></span> List2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>F12查看定义：</p>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202005/1576550-20200531140124293-592379000.png"><img src="https://img2020.cnblogs.com/blog/1576550/202005/1576550-20200531140124293-592379000.png" alt="img"></a></p>
+<p>可以看到，在泛型接口的T前面有一个out关键字修饰，而且T只能是返回值类型，不能作为参数类型，这就是协变。使用了协变以后，左边声明的是基类，右边可以声明基类或者基类的子类。</p>
+<p>协变除了可以用在接口上面，也可以用在委托上面：</p>
+<pre class=" language-csharp"><code class="language-csharp"> Func<span class="token operator">&lt;</span>Animal<span class="token operator">></span> func <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Func</span><span class="token operator">&lt;</span>Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>除了使用.NET框架定义好的以为，我们还可以自定义协变，例如：</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token comment" spellcheck="true">/// &lt;summary></span>
+    <span class="token comment" spellcheck="true">/// out 协变 只能是返回结果</span>
+    <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+    <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ICustomerListOut</span><span class="token operator">&lt;</span><span class="token keyword">out</span> T<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        T <span class="token function">Get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomerListOut</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">:</span> ICustomerListOut<span class="token operator">&lt;</span>T<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> T <span class="token function">Get</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">default</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>使用自定义的协变：</p>
+<pre class=" language-csharp"><code class="language-csharp"> <span class="token comment" spellcheck="true">// 使用自定义协变</span>
+ ICustomerListOut<span class="token operator">&lt;</span>Animal<span class="token operator">></span> customerList1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomerListOut</span><span class="token operator">&lt;</span>Animal<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ ICustomerListOut<span class="token operator">&lt;</span>Animal<span class="token operator">></span> customerList2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomerListOut</span><span class="token operator">&lt;</span>Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>在来看看逆变。</p>
+<p>在泛型接口的T前面有一个In关键字修饰，而且T只能方法参数，不能作为返回值类型，这就是逆变。请看下面的自定义逆变：</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token comment" spellcheck="true">/// &lt;summary></span>
+    <span class="token comment" spellcheck="true">/// 逆变 只能是方法参数</span>
+    <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+    <span class="token comment" spellcheck="true">/// &lt;typeparam name="T">&lt;/typeparam></span>
+    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ICustomerListIn</span><span class="token operator">&lt;</span><span class="token keyword">in</span> T<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">void</span> <span class="token function">Show</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomerListIn</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">:</span> ICustomerListIn<span class="token operator">&lt;</span>T<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Show</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>使用自定义逆变：</p>
+<pre class=" language-csharp"><code class="language-csharp"> <span class="token comment" spellcheck="true">// 使用自定义逆变</span>
+ ICustomerListIn<span class="token operator">&lt;</span>Cat<span class="token operator">></span> customerListCat1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomerListIn</span><span class="token operator">&lt;</span>Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ ICustomerListIn<span class="token operator">&lt;</span>Cat<span class="token operator">></span> customerListCat2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomerListIn</span><span class="token operator">&lt;</span>Animal<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>协变和逆变也可以同时使用，看看下面的例子：</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token comment" spellcheck="true">/// &lt;summary></span>
+    <span class="token comment" spellcheck="true">/// inT 逆变</span>
+    <span class="token comment" spellcheck="true">/// outT 协变</span>
+    <span class="token comment" spellcheck="true">/// &lt;/summary></span>
+    <span class="token comment" spellcheck="true">/// &lt;typeparam name="inT">&lt;/typeparam></span>
+    <span class="token comment" spellcheck="true">/// &lt;typeparam name="outT">&lt;/typeparam></span>
+    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IMyList</span><span class="token operator">&lt;</span><span class="token keyword">in</span> inT<span class="token punctuation">,</span> <span class="token keyword">out</span> outT<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">void</span> <span class="token function">Show</span><span class="token punctuation">(</span>inT t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        outT <span class="token function">Get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        outT <span class="token function">Do</span><span class="token punctuation">(</span>inT t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyList</span><span class="token operator">&lt;</span>T1<span class="token punctuation">,</span> T2<span class="token operator">></span> <span class="token punctuation">:</span> IMyList<span class="token operator">&lt;</span>T1<span class="token punctuation">,</span> T2<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Show</span><span class="token punctuation">(</span>T1 t<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token function">GetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> T2 <span class="token function">Get</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span>T2<span class="token punctuation">)</span><span class="token punctuation">.</span>Name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">default</span><span class="token punctuation">(</span>T2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> T2 <span class="token function">Do</span><span class="token punctuation">(</span>T1 t<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token function">GetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span>T2<span class="token punctuation">)</span><span class="token punctuation">.</span>Name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">default</span><span class="token punctuation">(</span>T2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>使用：</p>
+<pre class=" language-csharp"><code class="language-csharp"> IMyList<span class="token operator">&lt;</span>Cat<span class="token punctuation">,</span> Animal<span class="token operator">></span> myList1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyList</span><span class="token operator">&lt;</span>Cat<span class="token punctuation">,</span> Animal<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ IMyList<span class="token operator">&lt;</span>Cat<span class="token punctuation">,</span> Animal<span class="token operator">></span> myList2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyList</span><span class="token operator">&lt;</span>Cat<span class="token punctuation">,</span> Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//协变</span>
+ IMyList<span class="token operator">&lt;</span>Cat<span class="token punctuation">,</span> Animal<span class="token operator">></span> myList3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyList</span><span class="token operator">&lt;</span>Animal<span class="token punctuation">,</span> Animal<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//逆变</span>
+ IMyList<span class="token operator">&lt;</span>Cat<span class="token punctuation">,</span> Animal<span class="token operator">></span> myList4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyList</span><span class="token operator">&lt;</span>Animal<span class="token punctuation">,</span> Cat<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//逆变+协变</span></code></pre>
+<p>有关可变性的注意事项</p>
+<ul>
+<li>变化只适用于引用类型，因为不能直接从值类型派生其他类型</li>
+<li>显示变化使用in和out关键字只适用于委托和接口，不适用于类、结构和方法</li>
+<li>不包括in和out关键字的委托和接口类型参数叫做<strong>不变</strong></li>
+</ul>
+<h2 id="泛型缓存"><a href="#泛型缓存" class="headerlink" title="泛型缓存"></a>泛型缓存</h2><p>在前面我们学习过，类中的静态类型无论实例化多少次，在内存中只会有一个。静态构造函数只会执行一次。在泛型类中，T类型不同，每个不同的T类型，都会产生一个不同的副本，所以会产生不同的静态属性、不同的静态构造函数，请看下面的例子：</p>
+<pre class=" language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GenericCache</span><span class="token operator">&lt;</span>T<span class="token operator">></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token function">GenericCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"This is GenericCache 静态构造函数"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _TypeTime <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span><span class="token string">"{0}_{1}"</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token punctuation">.</span>FullName<span class="token punctuation">,</span> DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token string">"yyyyMMddHHmmss.fff"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">string</span> _TypeTime <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> <span class="token function">GetCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _TypeTime<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GenericCacheTest</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Show</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>GenericCache<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">.</span><span class="token function">GetCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Thread<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>GenericCache<span class="token operator">&lt;</span><span class="token keyword">long</span><span class="token operator">></span><span class="token punctuation">.</span><span class="token function">GetCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Thread<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>GenericCache<span class="token operator">&lt;</span>DateTime<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">GetCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Thread<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>GenericCache<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">.</span><span class="token function">GetCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Thread<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>GenericCache<span class="token operator">&lt;</span>GenericCacheTest<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">GetCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Thread<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Main()方法里面调用：</p>
+<pre class=" language-csharp"><code class="language-csharp"> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+    <span class="token preprocessor property">#<span class="token directive keyword">region</span> 泛型缓存</span>
+    GenericCacheTest<span class="token punctuation">.</span><span class="token function">Show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+ <span class="token punctuation">}</span></code></pre>
+<p>结果：</p>
+<p><a target="_blank" rel="noopener" href="https://img2020.cnblogs.com/blog/1576550/202005/1576550-20200531140057502-1208484680.png"><img src="https://img2020.cnblogs.com/blog/1576550/202005/1576550-20200531140057502-1208484680.png" alt="20200530232600809"></a></p>
+<p>从上面的截图中可以看出，泛型会为不同的类型都创建一个副本，所以静态构造函数会执行5次。 而且每次静态属性的值都是一样的。利用泛型的这一特性，可以实现缓存。</p>
+<p>注意：只能为不同的类型缓存一次。泛型缓存比字典缓存效率高。泛型缓存不能主动释放。</p>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><h2 id="1-泛型代码中的-default-关键字"><a href="#1-泛型代码中的-default-关键字" class="headerlink" title="1.泛型代码中的 default 关键字"></a>1.<strong>泛型代码中的</strong> <strong>default</strong> <strong>关键字</strong></h2><p>在泛型类和泛型方法中会出现的一个问题是，如何把缺省值赋给参数化类型，此时无法预先知道以下两点：</p>
+<ul>
+<li>T将是值类型还是引用类型</li>
+<li>如果T是值类型，那么T将是数值还是结构</li>
+</ul>
+<p>对于一个参数化类型T的变量t，仅当T是引用类型时，t = null语句才是合法的； t = 0只对数值的有效，而对结构则不行。这个问题的解决办法是用default关键字，它对引用类型返回空，对值类型的数值型返回零。而对于结构，它将返回结构每个成员，并根据成员是值类型还是引用类型，返回零或空。下面GenericList类的例子显示了如何使用default关键字。</p>
+<pre class=" language-csharp"><code class="language-csharp">    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">region</span> 泛型代码默认关键字default</span>
+        <span class="token comment" spellcheck="true">// 使用非空的整数列表进行测试.</span>
+        GenericList<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> gll <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericList</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gll<span class="token punctuation">.</span><span class="token function">AddNode</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gll<span class="token punctuation">.</span><span class="token function">AddNode</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gll<span class="token punctuation">.</span><span class="token function">AddNode</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> intVal <span class="token operator">=</span> gll<span class="token punctuation">.</span><span class="token function">GetLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 下面一行显示5.</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>intVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 用一个空的整数列表进行测试.</span>
+        GenericList<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> gll2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericList</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        intVal <span class="token operator">=</span> gll2<span class="token punctuation">.</span><span class="token function">GetLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 下面一行显示0.</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>intVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 使用非空字符串列表进行测试.</span>
+        GenericList<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> gll3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericList</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gll3<span class="token punctuation">.</span><span class="token function">AddNode</span><span class="token punctuation">(</span><span class="token string">"five"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gll3<span class="token punctuation">.</span><span class="token function">AddNode</span><span class="token punctuation">(</span><span class="token string">"four"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">string</span> sVal <span class="token operator">=</span> gll3<span class="token punctuation">.</span><span class="token function">GetLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 下面一行显示five.</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>sVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 使用一个空字符串列表进行测试.</span>
+        GenericList<span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span> gll4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericList</span><span class="token operator">&lt;</span><span class="token keyword">string</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sVal <span class="token operator">=</span> gll4<span class="token punctuation">.</span><span class="token function">GetLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 下面一行显示一条空白行.</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>sVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+        Console<span class="token punctuation">.</span><span class="token function">ReadKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GenericList</span><span class="token operator">&lt;</span>T<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">class</span> <span class="token class-name">Node</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 每个节点都有一个指向列表中的下一个节点的引用.</span>
+            <span class="token keyword">public</span> Node Next<span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 每个节点都有一个T类型的值.</span>
+            <span class="token keyword">public</span> T Data<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">// 这个列表最初是空的.</span>
+        <span class="token keyword">private</span> Node head <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 在列表开始的时候添加一个节点，用t作为它的数据值.</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">AddNode</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            Node newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            newNode<span class="token punctuation">.</span>Next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+            newNode<span class="token punctuation">.</span>Data <span class="token operator">=</span> t<span class="token punctuation">;</span>
+            head <span class="token operator">=</span> newNode<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">// 下面的方法返回存储在最后一个节点中的数据值列表. 如果列表是空的, 返回类型T的默认值.</span>
+        <span class="token keyword">public</span> T <span class="token function">GetLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 临时变量的值作为方法的值返回. </span>
+            <span class="token comment" spellcheck="true">// 下面的声明初始化了临时的温度 </span>
+            <span class="token comment" spellcheck="true">// 类型T的默认值. 如果该列表为空返回默认值.</span>
+            T temp <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            Node current <span class="token operator">=</span> head<span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>current <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                temp <span class="token operator">=</span> current<span class="token punctuation">.</span>Data<span class="token punctuation">;</span>
+                current <span class="token operator">=</span> current<span class="token punctuation">.</span>Next<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> temp<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<h2 id="2-泛型集合"><a href="#2-泛型集合" class="headerlink" title="2.泛型集合"></a>2.泛型集合</h2><p>通常情况下，建议您使用泛型集合，因为这样可以获得类型安全的直接优点而不需要从基集合类型派生并实现类型特定的成员。下面的泛型类型对应于现有的集合类型：</p>
+<p>1、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/6sh2ey19(VS.80).aspx">List</a> 是对应于 <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/system.collections.arraylist(VS.80).aspx">ArrayList</a> 的泛型类。<br>2、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/xfhwa508(VS.80).aspx">Dictionary</a> 是对应于 <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/system.collections.hashtable(VS.80).aspx">Hashtable</a> 的泛型类。<br>3、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ms132397(VS.80).aspx">Collection</a> 是对应于 <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/system.collections.collectionbase(VS.80).aspx">CollectionBase</a> 的泛型类。<br>4、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ms132474(VS.80).aspx">ReadOnlyCollection</a> 是对应于 <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/system.collections.readonlycollectionbase(VS.80).aspx">ReadOnlyCollectionBase</a> 的泛型类。<br>5、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/7977ey2c(VS.80).aspx">Queue</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/3278tedw(VS.80).aspx">Stack</a> 和 <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ms132319(VS.80).aspx">SortedList</a> 泛型类分别对应于与其同名的非泛型类。<br>6、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/he2s3bh7(VS.80).aspx">LinkedList</a> 是一个通用链接列表，它提供运算复杂度为 O(1) 的插入和移除操作。<br>7、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/f7fta44c(VS.80).aspx">SortedDictionary</a> 是一个排序的字典，其插入和检索操作的运算复杂度为 O(log n)，这使得它成为 <strong>SortedList</strong> 的十分有用的替代类型。<br>8、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ms132438(VS.80).aspx">KeyedCollection</a> 是介于列表和字典之间的混合类型，它提供了一种存储包含自己键的对象的方法。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>作为一个开发人员，当我们程序代码有相同的逻辑，有可能是方法、接口、类或者委托，只是某些参数类型不同，我们希望代码可以通用、复用，甚至是说为了偷懒，也可以说是在不确定类型的情况下，就应该考虑用泛型的思维去实现。</li>
+<li>在非泛型编程中，虽然所有的东西都可以作为Object传递，但是在传递的过程中免不了要进行类型转换。而类型转换在运行时是不安全的。使用泛型编程将可以减少不必要的类型转换，从而提高安全性。不仅是值类型，引用类型也存在这样的问题，因此有必要的尽量的去使用泛型集合。</li>
+<li>在非泛型编程中，将简单类型作为Object传递时会引起装箱和拆箱的操作，这两个过程都是具有很大开销的。使用泛型编程就不必进行装箱和拆箱操作了。</li>
+</ol>
+<p>参考 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/generics/">文档 </a>《C#图解教程》</p>
+<p>注：搜索关注公众号【DotNet技术谷】–回复【C#图解】，可获取 <a target="_blank" rel="noopener" href="https://www.ituring.com.cn/book/1108">C#图解教程</a>文件</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">艾三元</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://i3yuan.github.io/2020/05/31/c-ji-chu-pian-fan-xing/">https://i3yuan.github.io/2020/05/31/c-ji-chu-pian-fan-xing/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">艾三元</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/C-%E5%9F%BA%E7%A1%80%E7%AF%87/">
+                                    <span class="chip bg-color">C#基础篇</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/05/31/c-ji-chu-pian-wei-tuo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/41.jpg" class="responsive-img" alt="C#基础篇——委托">
+                        
+                        <span class="card-title">C#基础篇——委托</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            C#基础篇——委托前言在本章中，主要是借机这个C#基础篇的系列整理过去的学习笔记、归纳总结并更加理解透彻。
+在.Net开发中，我们经常会遇到并使用过委托，如果能灵活的掌握并加以使用会使你在编程中游刃有余，然后对于很多接触C#时间不长的开发者
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-31
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Net-C/" class="post-category">
+                                    .Net/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C-%E5%9F%BA%E7%A1%80%E7%AF%87/">
+                        <span class="chip bg-color">C#基础篇</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/12/ji-yu.netcore3.1-xi-lie-shi-yong-swagger-dao-chu-wen-dang-bu-chong-pian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/41.jpg" class="responsive-img" alt="基于.NetCore3.1系列 —— 使用Swagger导出文档 (补充篇)">
+                        
+                        <span class="card-title">基于.NetCore3.1系列 —— 使用Swagger导出文档 (补充篇)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于.NetCore3.1系列 —— 使用Swagger导出文档 (补充篇)前言 在上一篇导出文档番外篇中，我们已经熟悉了怎样根据json数据导出word的文档，生成接口文档，而在这一篇，将对上一篇进行完善补充，增加多种导出方式，实现更加完
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Swagger%E6%A1%86%E6%9E%B6/">
+                        <span class="chip bg-color">Swagger框架</span>
+                    </a>
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">艾三元</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+           <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>-->
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/i3yuan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

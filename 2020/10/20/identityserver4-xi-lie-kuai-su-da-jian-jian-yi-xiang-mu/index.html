@@ -1,0 +1,1185 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer"/>
+    <meta name="keywords" content="IdentityServer4系列 | 快速搭建简易项目, 艾三元">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>IdentityServer4系列 | 快速搭建简易项目 | 艾三元</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">艾三元</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+      
+      <i class="fas fa-blog" style="zoom: 0.6;"></i>
+      
+      <span>博客</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">艾三元</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="http://i3yuan.cnblogs.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-blog"></i>
+			
+			博客
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/i3yuan" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/i3yuan" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/29.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">IdentityServer4系列 | 快速搭建简易项目</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/net-core/">
+                                <span class="chip bg-color">.net core</span>
+                            </a>
+                        
+                            <a href="/tags/IdentityServer4/">
+                                <span class="chip bg-color">IdentityServer4</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                DotCore/C#
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-10-20
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="IdentityServer4系列-快速搭建简易项目"><a href="#IdentityServer4系列-快速搭建简易项目" class="headerlink" title="IdentityServer4系列 | 快速搭建简易项目"></a>IdentityServer4系列 | 快速搭建简易项目</h1><h2 id="一-、前言"><a href="#一-、前言" class="headerlink" title="一 、前言"></a>一 、前言</h2><p>从上一篇关于 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/i3yuan/p/13795828.html">常见术语说明</a>中，主要是对<strong>IdentityServer4</strong>的说明，以及其中涉及常见的术语的表述说明，包括对身份认证服务器、用户、客户端、资源以及各个令牌等进行对比区别说明。</p>
+<p>而在这一篇中，我们将尝试通过简单的方式来搭一个我们的IdentityServer授权服务器，熟悉IdentityServer4中搭建的流程以及将出现的问题。</p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210307998-1971947798.png"></p>
+<h2 id="二、-搭建"><a href="#二、-搭建" class="headerlink" title="二、 搭建"></a>二、 搭建</h2><blockquote>
+<p>以下的项目示例都是基于IdentityServer4 <strong>4.x</strong>版本以上进行说明。 </p>
+<p>4.x版本较之前3.x的版本都有一些变更，在本例中，若发现与3.x版本有变更的一些地方，都会进行记录说明。</p>
+</blockquote>
+<h3 id="2-1-创建项目"><a href="#2-1-创建项目" class="headerlink" title="2.1.创建项目"></a>2.1.创建项目</h3><p>建立一个空的Asp.Net Core项目 ，使用Empty空模板</p>
+<h3 id="2-2-安装配置"><a href="#2-2-安装配置" class="headerlink" title="2.2.安装配置"></a>2.2.安装配置</h3><h4 id="2-2-1-安装程序包"><a href="#2-2-1-安装程序包" class="headerlink" title="2.2.1. 安装程序包"></a>2.2.1. 安装程序包</h4><ul>
+<li><p>可通过命令行的方式</p>
+<blockquote>
+<p>NuGet&gt;Install-Package IdentityServer4　　</p>
+</blockquote>
+</li>
+<li><p>通过包管理器方式 </p>
+<blockquote>
+<p>添加IdentityServer4包</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-2-2-配置管道"><a href="#2-2-2-配置管道" class="headerlink" title="2.2.2. 配置管道"></a>2.2.2. 配置管道</h4><p><strong>修改Configure方法，注入到容器</strong></p>
+<pre class=" language-C#"><code class="language-C#"> app.UseIdentityServer();</code></pre>
+<h4 id="2-2-3-配置内容"><a href="#2-2-3-配置内容" class="headerlink" title="2.2.3. 配置内容"></a>2.2.3. 配置内容</h4><p><strong>将服务注入到容器后，还需要对IdentityServce进行配置内容</strong></p>
+<blockquote>
+<ul>
+<li>哪些API需要Authorization Server进行资源保护</li>
+<li>哪些Client可以使用这个Authorization Server</li>
+<li>哪些User可以被这个AuthorizationServer识别并授权</li>
+<li>哪些资源可以指定作用域</li>
+</ul>
+</blockquote>
+<p>这里方便演示，直接以静态化的形式展示，实际开发应用中，可结合数据库或reidis缓存的数据持久化方式获取。</p>
+<p>建立配置内容文件<code> IdentityConfig.cs</code>（具体的 OpenID Connect 配置信息来源文件）</p>
+<pre class=" language-C#"><code class="language-C#">    public class IdentityConfig
+    {
+        public static IEnumerable<IdentityResource> IdentityResources =>
+           new IdentityResource[]
+           {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+           };
+        /// <summary>
+        /// Authorization Server保护了哪些 API Scope（作用域）
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<ApiScope> GetApiScopes()
+        {
+            return new[] { new ApiScope("ApiScope1", "ApiScope2") };
+        }
+        /// <summary>
+        /// 哪些客户端 Client（应用） 可以使用这个 Authorization Server
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Client> GetClients()
+        {
+            return new[]
+            {
+                new Client()
+                {
+                    ClientId="YuanIdentity", ///客户端的标识，要是惟一的
+                    ClientSecrets=new []{new Secret("6KGqzUx6nfZZp0a4NH2xenWSJQWAT8la".Sha256())}, ////客户端密码，进行了加密
+                    AllowedGrantTypes= GrantTypes.ClientCredentials, ////授权方式，这里采用的是客户端认证模式，只要ClientId，以及ClientSecrets正确即可访问对应的AllowedScopes里面的api资源
+                    AllowedScopes=new[]{"ApiScope1" }, //定义这个客户端可以访问的APi资源数组，上面只有一个api
+
+                }
+            };
+        }
+        /// <summary>
+        /// 哪些User可以被这个AuthorizationServer识别并授权
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<TestUser> GetTestUsers()
+        {
+            return new[]
+            {
+               new TestUser
+               {
+                   SubjectId="001",
+                   Username="i3yuan",
+                   Password="123456"
+               }
+           };
+        }
+
+
+    }</code></pre>
+<blockquote>
+<p> <strong>注意，如果你的代码没问题，但是依然报错，比如“无效的scope”等，就可能是nuget包版本问题</strong></p>
+<p> 在3.1.x 到 4.x 的变更中，<code>ApiResource</code> 的 <code>Scope</code> 正式独立出来为 <code>ApiScope</code> 对象，区别<code>ApiResource</code> 和 <code>Scope</code>的关系, <code>Scope</code> 是属于<code> ApiResource</code> 的一个属性，可以包含多个<code> Scope</code>。</p>
+<p> 所以</p>
+<p> 在3.x版本中</p>
+<pre class=" language-c#"><code class="language-c#"> public static IEnumerable<ApiResource> GetApiResources()
+ {
+     return new[] { new ApiResource("ApiScope1", "ApiScope2") };
+ }</code></pre>
+<p> 改成4.x版本为</p>
+<pre class=" language-c#"><code class="language-c#">public static IEnumerable<ApiScope> GetApiScopes()
+{
+ return new[] { new ApiScope("ApiScope1", "ApiScope2") };
+}</code></pre>
+</blockquote>
+<h4 id="2-2-4-添加配置服务"><a href="#2-2-4-添加配置服务" class="headerlink" title="2.2.4. 添加配置服务"></a>2.2.4. 添加配置服务</h4><p><strong>在Startup.cs文件，ConfigureServices方法中</strong></p>
+<pre class=" language-C#"><code class="language-C#">        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential() //开发环境                                                 .AddTestUsers(IdentityConfig.GetTestUsers().ToList())
+                .AddInMemoryClients(IdentityConfig.GetClients())
+                .AddInMemoryApiScopes(IdentityConfig.GetApiScopes());
+            services.AddControllers();
+        }</code></pre>
+<blockquote>
+<p><strong>1.  在学习 IdentityServer4 时熟悉的 InMemory 来说，<code>AddInMemoryApiResources</code> 变为了 <code>AddInMemoryApiScopes</code>  这个 ApiScope</strong></p>
+<p><strong>2.  我们现在是本地调试，可以告诉identity server4在程序的运行时候对这项工作进行设定: AddDeveloperSigningCredential()，它默认会存到硬盘上的， 所以每次重启服务不会破坏开发时的数据同步。这个方法只适合用于identity server4在单个机器运行， 如果是 production 你得使用AddSigningCredential()这个方法</strong></p>
+</blockquote>
+<p>以上操作完成后， 启动项目，通过它的 .well-known 端点来访问服务器的配置信息，在浏览器的地址栏中，输入地址：<a target="_blank" rel="noopener" href="http://localhost:5050/.well-known/openid-configuration%EF%BC%8C%E5%B9%B6%E5%9B%9E%E8%BD%A6%E3%80%82%E5%BA%94%E8%AF%A5%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E5%A6%82%E4%B8%8B%E7%9A%84%E5%93%8D%E5%BA%94%E4%BF%A1%E6%81%AF%E3%80%82">http://localhost:5050/.well-known/openid-configuration，并回车。应该可以看到如下的响应信息。</a> </p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210329575-439370798.png"></p>
+<h3 id="2-3-获取token"><a href="#2-3-获取token" class="headerlink" title="2.3. 获取token"></a>2.3. 获取token</h3><h4 id="2-3-1-启动项目"><a href="#2-3-1-启动项目" class="headerlink" title="2.3.1. 启动项目"></a>2.3.1. 启动项目</h4><h4 id="2-3-2-测试访问地址"><a href="#2-3-2-测试访问地址" class="headerlink" title="2.3.2. 测试访问地址"></a>2.3.2. 测试访问地址</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="http://localhost:5050/connect/token">http://localhost:5050/connect/token</a></p>
+</blockquote>
+<p>body参数 application/x-www-form-urlencoded (post)</p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210349797-1093176646.png"></p>
+<h4 id="2-3-3-Access-Token"><a href="#2-3-3-Access-Token" class="headerlink" title="2.3.3. Access_Token"></a>2.3.3. Access_Token</h4><p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210359631-906997437.png"></p>
+<blockquote>
+<p><strong>需要对token进行签名， 这意味着 identity server 需要一对public和private key。同时也是可以由上图的解析发现是需要一对公私key的。</strong></p>
+</blockquote>
+<h2 id="三、UI界面"><a href="#三、UI界面" class="headerlink" title="三、UI界面"></a>三、UI界面</h2><p>考虑IdentityServer4需要进行管理查看，添加页面管理界面</p>
+<p> 官方为我们提供了一个快速启动的UI界面，我们只需要下载下来即可，这里有两个方法：</p>
+<h3 id="3-1-QuickStart-UI界面"><a href="#3-1-QuickStart-UI界面" class="headerlink" title="3.1. QuickStart UI界面"></a>3.1. QuickStart UI界面</h3><pre class=" language-shell"><code class="language-shell">1、直接从这个地址下来下载，拷贝到项目中，一共三个文件夹；// https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
+
+2、在当前文件夹中执行命令，自动下载；
+
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/IdentityServer/IdentityServer4.Quickstart.UI/master/getmaster.ps1'))</code></pre>
+<h3 id="3-2-默认目录"><a href="#3-2-默认目录" class="headerlink" title="3.2. 默认目录"></a>3.2. 默认目录</h3><p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210411415-1724940248.png"></p>
+<p>下载完官方提供的默认UI界面后，会提供默认的三个目录文件夹分别为：Quickstart (控制器方法)、Views(视图)、wwwroot (静态文件)</p>
+<h3 id="3-3-修改配置"><a href="#3-3-修改配置" class="headerlink" title="3.3. 修改配置"></a>3.3. 修改配置</h3><p>配置中间件来使用静态文件：</p>
+<pre class=" language-c#"><code class="language-c#">app.UseStaticFiles();</code></pre>
+<h2 id="四、运行"><a href="#四、运行" class="headerlink" title="四、运行"></a>四、运行</h2><p>运行展示效果，启动默认的地址如下：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://localhost:5050/">http://localhost:5050</a></p>
+</blockquote>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210425344-338210082.png"></p>
+<p>运行项目后，可以发现启动默认的欢迎界面，看到对应的项目版本，我们这里用的是最新的<code>IdentityServer4</code>版本为<code>4.1.1</code> ，以及点击 <strong>discovery document</strong>，可以看到了我们上边说到的 token 获取的接口地址 ，其中对应的端点地址信息。</p>
+<blockquote>
+<p><strong>通过它的 .well-known 端点来访问服务器的配置信息，在浏览器的地址栏中，输入地址：<a target="_blank" rel="noopener" href="http://localhost:5050/.well-known/openid-configuration%EF%BC%8C%E5%B9%B6%E5%9B%9E%E8%BD%A6,%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E5%93%8D%E5%BA%94%E4%BF%A1%E6%81%AF%E3%80%82">http://localhost:5050/.well-known/openid-configuration，并回车,可以看到对应的响应信息。</a></strong>     </p>
+</blockquote>
+<h2 id="五、模板"><a href="#五、模板" class="headerlink" title="五、模板"></a>五、模板</h2><p>在上文中，我们通过手动搭建的方式，从一个空模板的搭建，到引用对应的Nuget包，安装修改配置，并搭配了官方提供的UI界面，初步形成了一个简易的<code>IdentityServer4</code>初始化项目框架，这种一步步的构建项目的方式。</p>
+<p>官方也给我们提供了对应的快捷创建项目的模板，所以，如果你不想创建MVC项目，可以用官方提供的模板方式进行创建初始化项目。</p>
+<h3 id="5-1-安装模板"><a href="#5-1-安装模板" class="headerlink" title="5.1. 安装模板"></a>5.1. 安装模板</h3><pre class=" language-shell"><code class="language-shell">dotnet new -i IdentityServer4.Templates</code></pre>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210446345-781249573.png"></p>
+<p>在命令的输出中，可以看到已经安装了多个关于 IdentityServer4 的模版</p>
+<table>
+<thead>
+<tr>
+<th>模板</th>
+<th>简称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IdentityServer4 with AdminUI</td>
+<td>is4admin</td>
+<td>这为用户、身份、客户端和资源提供了一个基于web的管理界面.该社区版本旨在测试IdentityServer集成场景，并且仅限于本地主机：5000、SQLite、10个用户和2个客户端。社区版不适合生产应用。</td>
+</tr>
+<tr>
+<td>IdentityServer4 with ASP.NET Core Identity</td>
+<td>is4aspid</td>
+<td>添加使用ASP.NET标识进行用户管理的基本IdentityServer。如果您自动启动数据库，您将得到两个用户：Alice和bob–都带有密码Pass123$。检查SeedData.cs文件。</td>
+</tr>
+<tr>
+<td>IdentityServer4 Empty</td>
+<td>is4empty</td>
+<td>在没有UI的情况下创建一个最小的IdentityServer4项目。</td>
+</tr>
+<tr>
+<td>IdentityServer4 with Entity Framework Stores</td>
+<td>is4ef</td>
+<td>添加使用实体框架进行配置和状态管理的基本IdghtyServer。如果您启动数据库，您将获得一些基本的客户端和资源注册，请检查SeedData.cs文件。</td>
+</tr>
+<tr>
+<td>IdentityServer4 with In-Memory Stores and Test Users</td>
+<td>is4inmem</td>
+<td>添加具有UI、测试用户和示例客户端和资源的基本IdentityServer。显示内存中的代码和JSON配置。</td>
+</tr>
+<tr>
+<td>IdentityServer4 Quickstart UI (UI assets only)</td>
+<td>is4ui</td>
+<td>将快速启动UI添加到当前项目(例如，可以在<code>is4empty</code>的基础上添加)</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-选择项目"><a href="#5-2-选择项目" class="headerlink" title="5.2. 选择项目"></a>5.2. 选择项目</h3><p>这里面最为简单的项目模版就是 <code>IdentityServer4 with In-Memory Stores and Test Users</code> 了，它简称为 <code>is4inmem</code> ，我们下面就使用它来创建项目。</p>
+<pre class=" language-shell"><code class="language-shell">dotnet new 模板名 -n 项目名称</code></pre>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210502040-26294769.png"></p>
+<h3 id="5-3-启动应用"><a href="#5-3-启动应用" class="headerlink" title="5.3. 启动应用"></a>5.3. 启动应用</h3><p>启动项目后，</p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201019210514685-208572780.png"></p>
+<p>可以看到项目的效果跟我们之前一步步搭建的效果是一样的，这说明我们已经创建了第一个可运行的 IdentityServer4 服务器了。</p>
+<h2 id="六、说明"><a href="#六、说明" class="headerlink" title="六、说明"></a>六、说明</h2><h3 id="6-1-HS256与RS256"><a href="#6-1-HS256与RS256" class="headerlink" title="6.1. HS256与RS256"></a>6.1. HS256与RS256</h3><p>JWT签名算法中，一般有两个选择，一个采用HS256,另外一个就是采用RS256。</p>
+<blockquote>
+<p><strong>签名实际上是一个加密的过程，生成一段标识（也是JWT的一部分）作为接收方验证信息是否被篡改的依据。</strong></p>
+</blockquote>
+<ol>
+<li><strong>HS256</strong> 使用密钥生成<strong>固定的签名</strong>，简单地说，HS256 必须与任何想要验证 JWT的 客户端或 API <strong>共享密钥</strong>，因此必须注意确保密钥不被泄露。</li>
+<li><strong>RS256</strong> 生成<strong>非对称签名</strong>，这意味着必须使用私钥来签签名 JWT，并且必须使用对应的公钥来验证签名。与对称算法不同，使用 RS256 可以保证服务端是 JWT 的签名者，因为服务端是唯一拥有私钥的一方。这样做将不再需要在许多应用程序之间共享私钥。</li>
+</ol>
+<p>因此，在开发应用的时候启用JWT时候，使用RS256更加安全，你可以控制谁能使用什么类型的密钥。同时可以让服务端是唯一拥有私钥的一方，不需共享私钥。</p>
+<h3 id="6-2-关于证书"><a href="#6-2-关于证书" class="headerlink" title="6.2 关于证书"></a>6.2 关于证书</h3><p>　　生产环境（负载集群）一般需要使用固定的证书签名与验签,以确保重启服务端或负载的时候 Token 都能验签通过。（不使用临时证书）    </p>
+<h4 id="6-2-1-创建证书"><a href="#6-2-1-创建证书" class="headerlink" title="6.2.1 创建证书"></a>6.2.1 创建证书</h4><pre class=" language-shell"><code class="language-shell">#生成私钥文件
+openssl genrsa -out idsrv4.key 2048
+#创建证书签名请求文件 CSR（Certificate Signing Request），用于提交给证书颁发机构（即 Certification Authority (CA)）即对证书签名，申请一个数字证书。
+openssl req -new -key idsrv4.key -out idsrv4.csr
+#生成自签名证书（证书颁发机构（CA）签名后的证书，因为自己做测试那么证书的申请机构和颁发机构都是自己,crt 证书包含持有人的信息，持有人的公钥，以及签署者的签名等信息。当用户安装了证书之后，便意味着信任了这份证书，同时拥有了其中的公钥。）
+openssl x509 -req -days 365 -in idsrv4.csr -signkey idsrv4.key -out idsrv4.crt
+#自签名证书与私匙合并成一个文件
+openssl pkcs12 -export -in idsrv4.crt -inkey idsrv4.key -out idsrv4.pfx
+
+或
+openssl req -newkey rsa:2048 -nodes -keyout idsrv4.key -x509 -days 365 -out idsrv4.cer
+openssl pkcs12 -export -in idsrv4.cer -inkey idsrv4.key -out idsrv4.pfx</code></pre>
+<p>中途提示让你输入Export Password,这个password后面会用到。</p>
+<h4 id="6-2-2-项目配置"><a href="#6-2-2-项目配置" class="headerlink" title="6.2.2 项目配置"></a>6.2.2 项目配置</h4><p>拷贝生成的证书，放到认证/授权服务器项目中。(VS中配置文件设置文件始终复制)，最后把证书路径和密码配置到 IdentityServer 中，因为我们自签名的证书是 PKCS12 (个人数字证书标准，Public Key Cryptography Standards #12) 标准包含私钥与公钥）标准，包含了公钥和私钥。</p>
+<p>A、在<code>appsetting.json</code> 配置文件中添加如下：此处需要配置password，即生成证书的时候输入的密码。</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"Certificates"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"CerPath"</span><span class="token operator">:</span> <span class="token string">"certificate\\idsrv4.pfx"</span><span class="token punctuation">,</span>
+        <span class="token property">"Password"</span><span class="token operator">:</span> <span class="token string">"P@ssw0rd"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> </code></pre>
+<p>B、在starup.cs中ConfigureServices方法中配置如下即可。</p>
+<pre class=" language-c#"><code class="language-c#">var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+services.AddIdentityServer().AddSigningCredential(new X509Certificate2(
+Path.Combine(basePath,Configuration["Certificates:CerPath"]),
+Configuration["Certificates:Password"])
+)</code></pre>
+<p>C、配置完后即可。我们启动IDS4项目即可生成加密的token。</p>
+<h4 id="6-2-3-提取补充"><a href="#6-2-3-提取补充" class="headerlink" title="6.2.3 提取补充"></a>6.2.3 提取补充</h4><p>OpenSSL 提取 pfx 证书公钥与私钥</p>
+<pre class=" language-shell"><code class="language-shell">提取pfx证书公钥和私钥
+从pfx证书中提取密钥信息，并转换为key格式（pfx使用pkcs12模式补足）
+1. 提取密钥对(如果pfx证书已加密，会提示输入密码)
+openssl pkcs12 -in idsrv4.pfx -nocerts -nodes -out idsrv4.key
+2. 从密钥对提取公钥
+openssl rsa -in idsrv4.key -pubout -out idsrv4_pub.key
+3. 从密钥对提取私钥
+openssl rsa -in  idsrv4.key -out idsrv4_pri.key
+4. 因为RSA算法使用的是 pkcs8 模式补足，需要对提取的私钥进一步处理得到最终私钥
+openssl pkcs8 -topk8 -inform PEM -in idsrv4_pri.key -outform PEM -nocrypt</code></pre>
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>将得到的token在jwt.io 网站来认证一下,需要将 crt 公钥、key私钥复制到验证中，发现认证ok,则说明实现防篡改。</p>
+<p>后缀为crt公钥需要带着 —–BEGIN CERTIFICATE—– 和 —–END CERTIFICATE—– 一起复制。<br>后缀为key私钥私钥需要带着 —–BEGIN RSA PRIVATE KEY—– 和 —–END RSA PRIVATE KEY—– 一起复制。</p>
+</blockquote>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><ol>
+<li>在本篇中我们通过手动或者官方模板的方式简易的实现了我们的IdentityServer授权服务器搭建，并做了相应的配置和UI配置，实现了获取Token方式。</li>
+<li>对于相应的配置我们需要注意的三个点就是，有哪些用户(users)可以通过哪些客户端(clents)来访问我们的哪些API保护资源 (API)。</li>
+<li>在后续会对其中的授权模式，数据库持久化问题，以及如何应用在API资源服务器中和配置在客户端中，会进一步说明。</li>
+<li>如果有不对的或不理解的地方，希望大家可以多多指正，提出问题，一起讨论,不断学习,共同进步。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/i3yuan/Yuan.IdentityServer4.Demo">项目地址</a></li>
+</ol>
+<h2 id="八、资料"><a href="#八、资料" class="headerlink" title="八、资料"></a>八、资料</h2><p><a target="_blank" rel="noopener" href="https://identityserver4.readthedocs.io/en/latest/intro/big_picture.html">IdentityServer4官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/IdentityServer/IdentityServer4.Templates">IdentiytServer4模板</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/IdentityServer/IdentityServer4.Quickstart.UI">IdentityServer4界面</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">艾三元</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://i3yuan.github.io/2020/10/20/identityserver4-xi-lie-kuai-su-da-jian-jian-yi-xiang-mu/">https://i3yuan.github.io/2020/10/20/identityserver4-xi-lie-kuai-su-da-jian-jian-yi-xiang-mu/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">艾三元</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/net-core/">
+                                    <span class="chip bg-color">.net core</span>
+                                </a>
+                            
+                                <a href="/tags/IdentityServer4/">
+                                    <span class="chip bg-color">IdentityServer4</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/10/20/identityserver4-xi-lie-kuai-su-da-jian-jian-yi-xiang-mu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="IdentityServer4系列 | 快速搭建简易项目">
+                        
+                        <span class="card-title">IdentityServer4系列 | 快速搭建简易项目</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            IdentityServer4系列 | 快速搭建简易项目一 、前言从上一篇关于 常见术语说明中，主要是对IdentityServer4的说明，以及其中涉及常见的术语的表述说明，包括对身份认证服务器、用户、客户端、资源以及各个令牌等进行对比区
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                    <a href="/tags/IdentityServer4/">
+                        <span class="chip bg-color">IdentityServer4</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/11/identityserver4-xi-lie-chang-jian-zhu-yu-shuo-ming/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="IdentityServer4系列 | 常见术语说明">
+                        
+                        <span class="card-title">IdentityServer4系列 | 常见术语说明</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            IdentityServer4系列 | 常见术语说明一、前言在上一篇中，我们IdentityServer4的说明，认识到是一个基于OpenID Connect协议标准的身份认证和授权程序，并简单的对基础知识的认识以及区别说明，从OAuth、
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/DotCore-C/" class="post-category">
+                                    DotCore/C#
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/net-core/">
+                        <span class="chip bg-color">.net core</span>
+                    </a>
+                    
+                    <a href="/tags/IdentityServer4/">
+                        <span class="chip bg-color">IdentityServer4</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">艾三元</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+           <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>-->
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/i3yuan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
